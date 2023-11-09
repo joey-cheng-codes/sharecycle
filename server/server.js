@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const PORT = 3000;
-// const mongoose = require('mongoose');
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
