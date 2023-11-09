@@ -11,4 +11,5 @@ app.use(cors());
 
 app.use('/', express.static(path.resolve(__dirname, '../build')));
 
+
 app.listen(PORT, () => { console.log('Listening on port 3000... a new life application') });

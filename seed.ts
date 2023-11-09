@@ -6,12 +6,12 @@ async function main() {
   try {
     await prisma.user.create({
       data: {
-        username: 'Piper',
+        username: 'PiedPiper',
         nickname: 'Piper',
         firstName: 'Piper',
         lastName: 'Pied',
         email: 'ppied@fake.com',
-        password: 'password',
+        password: 'musicLover16!',
         items: {
           create: {
             itemName: 'Crosley record player',
