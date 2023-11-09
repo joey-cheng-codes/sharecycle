@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Give a new life to your stuff by sharing it with your community!",
   "main": "webpack.config.js",
+  "prisma": {
+    "seed": "ts-node seed.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/server.js",
