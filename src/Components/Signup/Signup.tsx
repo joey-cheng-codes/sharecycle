@@ -1,10 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Signup = () => {
-  const handleFormSubmission = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const [id, setId] = useState(0);
+  const [username, setUsername] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
 
-    console.log('form submitted')
+  const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/signup', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: id,
+          username: username,
+          nickname: nickname,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          profileImageUrl: profileImageUrl,
+        })
+      })
+      if (response.ok) {
+        // window.location.replace('/');
+        console.log('response is good')
+      }
+      else {
+        throw new Error('An error has occured. Failed to create a new account.')
+      }
+    }
+    catch (err) {
+      console.error(err, 'Error signing up for new account.')
+    }
+
+    // const firstNameHandler = (e: React.FormEvent<HTMLFormElement>) => {
+
+    //   setFirstName((e.target as HTMLInputElement).value);
+    // }
   }
   return (
     <div>
@@ -16,13 +56,13 @@ const Signup = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="/signup" method="POST" onSubmit={handleFormSubmission}>
+          <form className="space-y-6" onSubmit={handleFormSubmission}>
 
 
             <div>
               <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
               <div className="mt-2">
-                <input id="firstName" name="firstName" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFirstName(e.target.value) }} id="firstName" name="firstName" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
