@@ -30,8 +30,7 @@ const Signup = () => {
         })
       })
       if (response.ok) {
-        // window.location.replace('/');
-        console.log('response is good')
+        window.location.replace('/');
       }
       else {
         throw new Error('An error has occured. Failed to create a new account.')
