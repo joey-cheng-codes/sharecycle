@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const Signup = () => {
-  const [id, setId] = useState(0);
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -13,13 +12,12 @@ const Signup = () => {
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('http://localhost:3000/user/signup', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id: id,
           username: username,
           nickname: nickname,
           firstName: firstName,
@@ -39,11 +37,6 @@ const Signup = () => {
     catch (err) {
       console.error(err, 'Error signing up for new account.')
     }
-
-    // const firstNameHandler = (e: React.FormEvent<HTMLFormElement>) => {
-
-    //   setFirstName((e.target as HTMLInputElement).value);
-    // }
   }
   return (
     <div>
@@ -68,28 +61,28 @@ const Signup = () => {
             <div>
               <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
               <div className="mt-2">
-                <input id="lastName" name="lastName" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setLastName(e.target.value) }} id="lastName" name="lastName" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
             <div>
               <label htmlFor="nickname" className="block text-sm font-medium leading-6 text-gray-900">Nickname (optional)</label>
               <div className="mt-2">
-                <input id="nickname" name="nickname" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setNickname(e.target.value) }} id="nickname" name="nickname" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
             <div>
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Username</label>
               <div className="mt-2">
-                <input id="username" name="username" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setUsername(e.target.value) }} id="username" name="username" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
               <div className="mt-2">
-                <input id="email" name="email" type="email" autoComplete="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) }} id="email" name="email" type="email" autoComplete="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
@@ -101,14 +94,14 @@ const Signup = () => {
                 </div>
               </div>
               <div className="mt-2">
-                <input id="password" name="password" type="password" autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }} id="password" name="password" type="password" autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
             <div>
               <label htmlFor="profileImageUrl" className="block text-sm font-medium leading-6 text-gray-900">Profile Picture (optional)</label>
               <div className="mt-2">
-                <input id="profileImageUrl" name="profileImageUrl" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfileImageUrl(e.target.value) }} id="profileImageUrl" name="profileImageUrl" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
