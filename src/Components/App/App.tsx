@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 const App = () => {
   return (
     <div>
-      <p className='underline font-bold text-3xl'>Hello World from App</p>
+      {/* <p className='underline font-bold text-3xl'>Hello World from App</p> */}
       <div>
         <BrowserRouter>
           <Routes>
