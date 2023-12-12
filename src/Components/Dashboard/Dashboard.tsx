@@ -15,13 +15,13 @@ const Dashboard = () => {
           data-modal-toggle="item-modal"
           className="mr-4"
           type="button"
-          onClick={() => setModalVisible(!modalVisible)}
+          onClick={() => setModalVisible((prevState) => !prevState)}
         >
           <IoIosAddCircle />
         </button>
         <Avatar />
       </div>
-      {modalVisible && <Item modalVisible={modalVisible} setModalVisible={setModalVisible} />}
+      {modalVisible && <Item setModalVisible={setModalVisible} />}
     </div>
   )
 }

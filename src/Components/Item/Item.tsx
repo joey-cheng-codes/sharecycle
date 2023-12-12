@@ -1,18 +1,45 @@
 import React from "react";
 
 interface ItemProps {
-  modalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const Item = ({ modalVisible, setModalVisible }: ItemProps) => {
+
+interface Category {
+  value: string;
+  label: string;
+}
+
+const Item = ({ setModalVisible }: ItemProps) => {
+  const categories = [
+    { value: "APPL", label: "Appliances" },
+    { value: "ARTS", label: "Arts, Crafts, & Sewing" },
+    { value: "AUTO", label: "Automative" },
+    { value: "BABY", label: "Baby Products" },
+    { value: "BEAU", label: "Beauty & Personal Care" },
+    { value: "BMM", label: "Books, Movies, & Music" },
+    { value: "CLOTH", label: "Clothing / Shoes / Accessories" },
+    { value: "DIY", label: "DIY & Home Improvement" },
+    { value: "ELEC", label: "Electronics" },
+    { value: "EXER", label: "Fitness & Exercise Equipment" },
+    { value: "FURN", label: "Furniture & Decor" },
+    { value: "FOOD", label: "Grocery & Gourmet Foods" },
+    { value: "HEA", label: "Health" },
+    { value: "HOME", label: "Home & Kitchen" },
+    { value: "OFFIC", label: "Office & School Supplies" },
+    { value: "OUT", label: "Outdoor & Gardening" },
+    { value: "PARTY", label: "Party & Event Supplies" },
+    { value: "PET", label: "Pet Supplies" },
+    { value: "SPORTS", label: "Sports & Outdoor Gear" },
+    { value: "TOYS", label: "Toys & Games" }
+  ];
+
   return (
     <div>
       <div id="item-modal"
         tabIndex={-1}
         aria-hidden="true"
-        className={`${modalVisible ? "block" : "hidden"
-          } 
-          fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700`}
+        className=
+        "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700"
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* <!-- Modal content --> */}
@@ -46,27 +73,12 @@ const Item = ({ modalVisible, setModalVisible }: ItemProps) => {
                 <div className="col-span-2 sm:col-span-1">
                   <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories(select one more)</label>
                   <select multiple id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    {/* <option defaultValue="">Select categories</option> */}
-                    <option value='APPL'>Appliances</option>
-                    <option value='ARTS'>Arts / Crafts / Sewing</option>
-                    <option value='AUTO'>Automative</option>
-                    <option value='BABY'>Baby Products</option>
-                    <option value='BEAU'>Beauty & Personal Care</option>
-                    <option value='BMM'>Books / Movies / Music</option>
-                    <option value='CLOTH'>Clothing / Shoes / Accessories</option>
-                    <option value='DIY'>DIY & Home Improvement</option>
-                    <option value='ELEC'>Electronics</option>
-                    <option value='EXER'>Fitness & Exercise Equipment</option>
-                    <option value='FURN'>Furniture & Decor</option>
-                    <option value='FOOD'>Grocery & Gourmet Foods</option>
-                    <option value='HEA'>Health</option>
-                    <option value='HOME'>Home & Kitchen</option>
-                    <option value='OFFIC'>Office & School Supplies</option>
-                    <option value='OUT'>Outdoor & Gardening</option>
-                    <option value='PARTY'>Party & Event Supplies</option>
-                    <option value='PET'>Pet Supplies</option>
-                    <option value='SPORTS'>Sports & Outdoor Gear</option>
-                    <option value='TOYS'>Toys & Games</option>
+                    {categories.map((category: Category) => {
+                      return <option key={category.value} value={category.value}> {category.label}
+                      </option>
+
+                    })
+                    }
                   </select>
                 </div>
                 <div className="col-span-2">
@@ -86,7 +98,7 @@ const Item = ({ modalVisible, setModalVisible }: ItemProps) => {
             </form>
           </div>
         </div>
-      </div>
+      </div >
 
     </div >
   );
