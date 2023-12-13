@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const userController = {};
 
 const prisma = new PrismaClient();
@@ -18,21 +18,21 @@ userController.createUser = async (req, res, next) => {
           password,
           profileImageUrl
         }
-      })
+      });
       res.locals.signup = signup;
       return next();
     }
     catch (err) {
-      return next(err)
+      return next(err);
     }
   }
 };
 
 
 userController.verifyUser = async (req, res, next) => {
-  console.log('***** inside the verify user')
+  console.log("***** inside the verify user");
   if (req.body.email.length && req.body.password.length) {
-    console.log(req.body.email, req.body.password)
+    console.log(req.body.email, req.body.password);
     try {
       const { email, password } = req.body;
       const login = await prisma.user.findUnique({
@@ -40,13 +40,13 @@ userController.verifyUser = async (req, res, next) => {
           email,
           password
         }
-      })
-      console.log('login response', login)
+      });
+      console.log("login response", login);
       res.locals.login = login;
       return next();
     }
     catch (err) {
-      return next(err)
+      return next(err);
     }
   }
 };

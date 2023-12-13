@@ -1,33 +1,32 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import React, { useState } from "react";
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = (): React.JSX.Element => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLoginSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/user/login', {
+      const response = await fetch("http://localhost:3000/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          email: email,
-          password: password,
+          email,
+          password
         })
-      })
+      });
       if (response.ok) {
-        window.location.replace('/dashboard');
+        window.location.replace("/dashboard");
+      } else {
+        throw new Error("An error has occured. Failed to login to account.");
       }
-      else {
-        throw new Error('An error has occured. Failed to login to account.')
-      }
+    } catch (err) {
+      console.error(err, "Error logging in.");
     }
-    catch (err) {
-      console.error(err, 'Error logging in.');
-    }
-  }
+  };
   return (
     <div>
       <h1> Login Page</h1>
@@ -42,7 +41,7 @@ const Login = () => {
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
               <div className="mt-2">
-                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} id="email" name="email" type="email" autoComplete="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value); }} id="email" name="email" type="email" autoComplete="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
@@ -54,7 +53,7 @@ const Login = () => {
                 </div>
               </div>
               <div className="mt-2">
-                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} id="password" name="password" type="password" autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value); }} id="password" name="password" type="password" autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
@@ -70,7 +69,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Login;

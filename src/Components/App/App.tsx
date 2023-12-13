@@ -1,10 +1,10 @@
-import React from 'react';
-import Login from '../Login/Login';
-import Signup from '../Signup/Signup';
-import Dashboard from '../Dashboard/Dashboard';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React from "react";
+import Login from "../Login/Login";
+import Signup from "../Signup/Signup";
+import Dashboard from "../Dashboard/Dashboard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-const App = () => {
+const App = (): React.JSX.Element => {
   return (
     <div>
       {/* <p className='underline font-bold text-3xl'>Hello World from App</p> */}
@@ -27,7 +27,7 @@ const App = () => {
         </BrowserRouter>
       </div>
     </div >
-  )
+  );
 };
 
 export default App;

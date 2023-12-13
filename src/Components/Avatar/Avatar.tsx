@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
-const Avatar = () => {
+const Avatar = (): React.JSX.Element => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   return (
     <div>
-      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" className="w-10 h-10 rounded-full cursor-pointer" src="https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg" alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible) }} />
-
+      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" className="w-10 h-10 rounded-full cursor-pointer" src="https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg" alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
 
       {/* <!-- Dropdown menu --> */}
       <div style={{ display: dropdownVisible ? "block" : "none" }} id="userDropdown" className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
@@ -30,6 +29,6 @@ const Avatar = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default Avatar
+  );
+};
+export default Avatar;

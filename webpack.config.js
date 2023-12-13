@@ -1,16 +1,16 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.js',
+  mode: process.env.NODE_ENV || "development",
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, './build'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, "./build"),
+    filename: "bundle.js"
   },
   plugins: [new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: path.resolve(__dirname, 'index.html')
+    filename: "index.html",
+    template: path.resolve(__dirname, "index.html")
   })],
   performance: {
     hints: false
@@ -19,8 +19,8 @@ module.exports = {
     port: 8080,
     proxy: [
       {
-        context: ['/api'],
-        target: 'http://localhost:3000',
+        context: ["/api"],
+        target: "http://localhost:3000",
       },
     ],
     historyApiFallback: true,
@@ -31,32 +31,32 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: ["@babel/preset-env", "@babel/preset-react"]
           },
         },
       },
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: 'ts-loader',
+        use: "ts-loader",
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.(svg|png|jpg|jpeg|gif)$/,
-        loader: 'file-loader'
+        loader: "file-loader"
       },
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.tsx', '.ts'],
+    extensions: [".js", ".jsx", ".tsx", ".ts"],
   },
 };

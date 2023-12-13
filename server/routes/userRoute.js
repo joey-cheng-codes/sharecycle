@@ -1,5 +1,5 @@
-const express = require('express')
-const userController = require('../controllers/userController');
+const express = require("express");
+const userController = require("../controllers/userController");
 const router = express.Router();
 
 // router.get('/',
@@ -8,17 +8,17 @@ const router = express.Router();
 //   }
 // );
 
-router.post('/login',
+router.post("/login",
   userController.verifyUser,
   (req, res) => {
     res.status(200).json(res.locals.login);
   }
 );
 
-router.post('/signup',
+router.post("/signup",
   userController.createUser,
   (req, res) => {
-    res.status(200).json(res.locals.signup)
+    res.status(200).json(res.locals.signup);
   }
 );
 
