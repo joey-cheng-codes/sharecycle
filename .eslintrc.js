@@ -9,8 +9,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
-        "plugin:jest/recommended",
-
+        "plugin:jest/recommended"
     ],
     "overrides": [
         {
@@ -47,6 +46,10 @@ module.exports = {
             "error",
             "always"
         ],
+        "eol-last": [
+            "error",
+            "always"
+        ],
         "@typescript-eslint/no-var-requires": "off"
     },
     "settings": {
@@ -54,4 +57,5 @@ module.exports = {
             "version": "detect",
         },
     },
+
 };

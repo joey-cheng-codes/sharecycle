@@ -28,6 +28,6 @@
   "types": [
     "node",
     "jest",
-    "@testing-library/jest-dom"
+    "testing-library__jest-dom"
   ],
 }
