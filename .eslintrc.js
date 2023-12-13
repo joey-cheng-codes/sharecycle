@@ -5,7 +5,8 @@ module.exports = {
         "node": true
     },
     "extends": [
-        "standard-with-typescript",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
 
     ],
@@ -22,14 +23,33 @@ module.exports = {
             }
         }
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "@typescript-eslint"
     ],
-    "ignorePatterns": [".eslintrc.js"],
     "rules": {
-    }
-}
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "@typescript-eslint/no-var-requires": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect",
+        },
+    },
+};

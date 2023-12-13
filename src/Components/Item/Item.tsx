@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -11,27 +11,27 @@ interface Category {
 
 const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
   const categories = [
-    { value: 'APPL', label: 'Appliances' },
-    { value: 'ARTS', label: 'Arts, Crafts, & Sewing' },
-    { value: 'AUTO', label: 'Automative' },
-    { value: 'BABY', label: 'Baby Products' },
-    { value: 'BEAU', label: 'Beauty & Personal Care' },
-    { value: 'BMM', label: 'Books, Movies, & Music' },
-    { value: 'CLOTH', label: 'Clothing / Shoes / Accessories' },
-    { value: 'DIY', label: 'DIY & Home Improvement' },
-    { value: 'ELEC', label: 'Electronics' },
-    { value: 'EXER', label: 'Fitness & Exercise Equipment' },
-    { value: 'FURN', label: 'Furniture & Decor' },
-    { value: 'FOOD', label: 'Grocery & Gourmet Foods' },
-    { value: 'HEA', label: 'Health' },
-    { value: 'HOME', label: 'Home & Kitchen' },
-    { value: 'OFFIC', label: 'Office & School Supplies' },
-    { value: 'OUT', label: 'Outdoor & Gardening' },
-    { value: 'PARTY', label: 'Party & Event Supplies' },
-    { value: 'PET', label: 'Pet Supplies' },
-    { value: 'SPORTS', label: 'Sports & Outdoor Gear' },
-    { value: 'TOYS', label: 'Toys & Games' }
-  ]
+    { value: "APPL", label: "Appliances" },
+    { value: "ARTS", label: "Arts, Crafts, & Sewing" },
+    { value: "AUTO", label: "Automative" },
+    { value: "BABY", label: "Baby Products" },
+    { value: "BEAU", label: "Beauty & Personal Care" },
+    { value: "BMM", label: "Books, Movies, & Music" },
+    { value: "CLOTH", label: "Clothing / Shoes / Accessories" },
+    { value: "DIY", label: "DIY & Home Improvement" },
+    { value: "ELEC", label: "Electronics" },
+    { value: "EXER", label: "Fitness & Exercise Equipment" },
+    { value: "FURN", label: "Furniture & Decor" },
+    { value: "FOOD", label: "Grocery & Gourmet Foods" },
+    { value: "HEA", label: "Health" },
+    { value: "HOME", label: "Home & Kitchen" },
+    { value: "OFFIC", label: "Office & School Supplies" },
+    { value: "OUT", label: "Outdoor & Gardening" },
+    { value: "PARTY", label: "Party & Event Supplies" },
+    { value: "PET", label: "Pet Supplies" },
+    { value: "SPORTS", label: "Sports & Outdoor Gear" },
+    { value: "TOYS", label: "Toys & Games" }
+  ];
 
   return (
     <div>
@@ -50,7 +50,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
                 Create New Item
               </h3>
               <button
-                onClick={() => { setModalVisible(false) }}
+                onClick={() => { setModalVisible(false); }}
                 type="button"
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="item-modal">
                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -75,7 +75,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
                   <select multiple id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     {categories.map((category: Category) => {
                       return <option key={category.value} value={category.value}> {category.label}
-                      </option>
+                      </option>;
                     })
                     }
                   </select>
@@ -100,7 +100,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
       </div >
 
     </div >
-  )
-}
+  );
+};
 
-export default Item
+export default Item;

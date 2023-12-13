@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const SearchBar = (): React.JSX.Element => {
   return (
@@ -16,7 +16,7 @@ const SearchBar = (): React.JSX.Element => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;
