@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from 'react'
 
 const Signup = (): React.JSX.Element => {
@@ -9,7 +10,7 @@ const Signup = (): React.JSX.Element => {
   const [password, setPassword] = useState('')
   const [profileImageUrl, setProfileImageUrl] = useState('')
 
-  const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     try {
       const response = await fetch('http://localhost:3000/user/signup', {
