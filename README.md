@@ -1,2 +1,2 @@
-# shameless-plug
-A recommendation website where users can plug their favorite products
+# ShareCycle: Sustainable Sharing Made Easy! 🔄
+Lend and borrow items with friends effortlessly, reducing waste and building a connected community. Join us in creating a sustainable future—one share at a time!

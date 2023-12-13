@@ -31,4 +31,4 @@ app.use((err, req, res) => {
   return res.status(errObj.status).json(errObj.message);
 });
 
-app.listen(PORT, () => { console.log("Listening on port 3000... a new life application"); });
+app.listen(PORT, () => { console.log("Listening on port 3000... ShareCycle application"); });
