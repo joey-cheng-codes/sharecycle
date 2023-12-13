@@ -51,4 +51,25 @@ userController.verifyUser = async (req, res, next) => {
   }
 };
 
+userController.addItem = async (req, res, next) => {
+  if (req.body.itemName.length && req.body.description.length && req.body.loanDurationDays.length && req.body.categories.length) {
+    try {
+      const { itemName, description, loanDurationDays, categories, imageUrl } = req.body;
+      const item = await prisma.item.create({
+        data: {
+          itemName,
+          description,
+          categories,
+          imageUrl,
+          loanDurationDays
+        }
+      });
+      res.locals.item = item;
+      return next();
+    }
+    catch (err) {
+      return next(err);
+    }
+  }
+};
 module.exports = userController;

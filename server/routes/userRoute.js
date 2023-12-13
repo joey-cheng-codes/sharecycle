@@ -22,5 +22,9 @@ router.post("/signup",
   }
 );
 
+router.post("/item", userController.addItem, (req, res) => {
+  res.status(200).json(res.locals.item);
+});
+
 
 module.exports = router;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import { ValueType } from "react-select/lib/types";
 
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -40,17 +39,23 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     { value: "TOYS", label: "Toys & Games" }
   ];
 
-  const handleCategoryChange = (selectedOptions: ValueType<Category, true>): void => {
-    if (selectedOptions) {
-      const selectedValues = (selectedOptions as Category[]).map((option) => option.value);
-      setCategories(selectedOptions as Category[]);
+  const handleCategoryChange = (data: Category[]): void => {
+    setCategories(data);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageUrl(() => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8D-G0b8ka5kyWMioBDY98SOJCYt8Xy7kklA&usqp=CAU");
     }
+    console.log(imageUrl);
   };
 
   const createItemHandler = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+
     try {
-      const response = await fetch("http://localhost:3000/item", {
+      const response = await fetch("http://localhost:3000/user/item", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -62,8 +67,10 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
           categories,
           imageUrl,
         })
+
       });
       if (response.ok) {
+        console.log(response);
         window.location.replace("/dashboard");
       } else {
         throw new Error("An error has occured. Failed to createa  new item.");
@@ -121,20 +128,20 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
                     id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     onChange={handleCategoryChange}
                   />
-                  {/* id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" /> */}
-                  {/* {categoryNames.map((category: Category) => {
-                      return <option key={category.value} value={category.value}> {category.label}
-                      </option>;
-                    })} */}
-                  {/* </Select> */}
                 </div>
                 <div className="col-span-2">
                   <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Description</label>
-                  <textarea id="description" rows={8} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write item description or notes to borrowee here"></textarea>
+                  <textarea
+                    onChange={(e) => { setDescription(e.target.value); }}
+                    id="description"
+                    rows={8}
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write item description or notes to borrowee here"></textarea>
                 </div>
                 <div className="col-span-2">
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload Image</label>
-                  <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
+                  <input
+                    onChange={handleImageChange}
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
                   <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, or JPG (MAX. 800x400px).</p>
                 </div>
               </div>
