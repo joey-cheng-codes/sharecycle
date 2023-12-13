@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -10,7 +10,12 @@ interface Category {
 }
 
 const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
-  const categories = [
+  const [itemName, setItemName] = useState("");
+  const [loanDurationDays, setLoanDurationDays] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const categoryNames = [
     { value: "APPL", label: "Appliances" },
     { value: "ARTS", label: "Arts, Crafts, & Sewing" },
     { value: "AUTO", label: "Automative" },
@@ -32,6 +37,38 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     { value: "SPORTS", label: "Sports & Outdoor Gear" },
     { value: "TOYS", label: "Toys & Games" }
   ];
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    // console.log(e.target.value);
+    // const array = e.target.value.split(",");
+    // console.log(array);
+  };
+
+  const createItemHandler = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/item", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          itemName,
+          description,
+          loanDurationDays,
+          categories,
+          imageUrl,
+        })
+      });
+      if (response.ok) {
+        window.location.replace("/dashboard");
+      } else {
+        throw new Error("An error has occured. Failed to createa  new item.");
+      }
+    }
+    catch (err) {
+      console.error(err, "Error creating a new item.");
+    }
+  };
 
   return (
     <div>
@@ -60,20 +97,23 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            <form className="p-4 md:p-5">
+            <form onSubmit={(e) => { return createItemHandler(e); }} className="p-4 md:p-5">
               <div className="grid gap-4 mb-4 grid-cols-2">
                 <div className="col-span-2">
                   <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Name</label>
-                  <input type="text" name="item-name" id="item-name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type item name" required />
+                  <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setItemName(e.target.value); }} type="text" name="item-name" id="item-name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type item name" required />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label htmlFor="loan-days" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max Loan Duration (days)</label>
-                  <input type="number" name="loan-days" id="loan-days" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="3" required />
+                  <input
+                    onChange={() => setLoanDurationDays((prevState) => { return prevState + 1; })} type="number" name="loan-days" id="loan-days" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="3" required />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories(select one more)</label>
-                  <select multiple id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    {categories.map((category: Category) => {
+                  <select
+                    onChange={handleCategoryChange}
+                    multiple id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    {categoryNames.map((category: Category) => {
                       return <option key={category.value} value={category.value}> {category.label}
                       </option>;
                     })
