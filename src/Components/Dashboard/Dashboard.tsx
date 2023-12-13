@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import SearchBar from "../SearchBar/SearchBar";
-import Avatar from "../Avatar/Avatar"
-import { IoIosAddCircle } from "react-icons/io";
-import Item from "../Item/Item";
-const Dashboard = () => {
+import React, { useState } from 'react'
+import SearchBar from '../SearchBar/SearchBar'
+import Avatar from '../Avatar/Avatar'
+import { IoIosAddCircle } from 'react-icons/io'
+import Item from '../Item/Item'
+const Dashboard = (): React.JSX.Element => {
   const [modalVisible, setModalVisible] = useState(false)
   return (
     <div className='dashboard-container'>
@@ -15,7 +15,7 @@ const Dashboard = () => {
           data-modal-toggle="item-modal"
           className="mr-4"
           type="button"
-          onClick={() => setModalVisible((prevState) => !prevState)}
+          onClick={() => { setModalVisible((prevState) => !prevState) }}
         >
           <IoIosAddCircle />
         </button>
@@ -26,4 +26,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard;
+export default Dashboard

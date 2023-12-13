@@ -14,7 +14,7 @@
     "noImplicitAny": true,
     "jsx": "react",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "include": [
     "postcss.config.ts",

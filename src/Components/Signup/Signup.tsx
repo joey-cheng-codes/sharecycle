@@ -1,40 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-const Signup = () => {
-  const [username, setUsername] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [profileImageUrl, setProfileImageUrl] = useState('');
+const Signup = (): React.JSX.Element => {
+  const [username, setUsername] = useState('')
+  const [nickname, setNickname] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [profileImageUrl, setProfileImageUrl] = useState('')
 
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch('http://localhost:3000/user/signup', {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: username,
-          nickname: nickname,
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          profileImageUrl: profileImageUrl,
+          username,
+          nickname,
+          firstName,
+          lastName,
+          email,
+          password,
+          profileImageUrl
         })
       })
       if (response.ok) {
-        window.location.replace('/');
-      }
-      else {
+        window.location.replace('/')
+      } else {
         throw new Error('An error has occured. Failed to create a new account.')
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err, 'Error signing up for new account.')
     }
   }
@@ -49,7 +47,6 @@ const Signup = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleFormSubmission}>
-
 
             <div>
               <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
@@ -118,6 +115,6 @@ const Signup = () => {
       </div>
     </div>
   )
-};
+}
 
-export default Signup;
+export default Signup
