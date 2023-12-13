@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Select from "react-select";
+import { ValueType } from "react-select/lib/types";
 
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -12,10 +14,10 @@ interface Category {
 const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
   const [itemName, setItemName] = useState("");
   const [loanDurationDays, setLoanDurationDays] = useState(0);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const categoryNames = [
+  const categoryNames: Category[] = [
     { value: "APPL", label: "Appliances" },
     { value: "ARTS", label: "Arts, Crafts, & Sewing" },
     { value: "AUTO", label: "Automative" },
@@ -37,10 +39,12 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     { value: "SPORTS", label: "Sports & Outdoor Gear" },
     { value: "TOYS", label: "Toys & Games" }
   ];
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // console.log(e.target.value);
-    // const array = e.target.value.split(",");
-    // console.log(array);
+
+  const handleCategoryChange = (selectedOptions: ValueType<Category, true>): void => {
+    if (selectedOptions) {
+      const selectedValues = (selectedOptions as Category[]).map((option) => option.value);
+      setCategories(selectedOptions as Category[]);
+    }
   };
 
   const createItemHandler = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -76,7 +80,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
         tabIndex={-1}
         aria-hidden="true"
         className=
-        "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700"
+        " w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700"
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* <!-- Modal content --> */}
@@ -108,17 +112,21 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
                   <input
                     onChange={() => setLoanDurationDays((prevState) => { return prevState + 1; })} type="number" name="loan-days" id="loan-days" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="3" required />
                 </div>
-                <div className="col-span-2 sm:col-span-1">
+                <div className="col-span-2">
                   <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories(select one more)</label>
-                  <select
+                  <Select
+                    closeMenuOnSelect={false}
+                    isMulti
+                    options={categoryNames}
+                    id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     onChange={handleCategoryChange}
-                    multiple id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    {categoryNames.map((category: Category) => {
+                  />
+                  {/* id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" /> */}
+                  {/* {categoryNames.map((category: Category) => {
                       return <option key={category.value} value={category.value}> {category.label}
                       </option>;
-                    })
-                    }
-                  </select>
+                    })} */}
+                  {/* </Select> */}
                 </div>
                 <div className="col-span-2">
                   <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Description</label>
