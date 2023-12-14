@@ -35,11 +35,11 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
 
   return (
     <div>
-      <div id="item-modal"
+      <div
         tabIndex={-1}
         aria-hidden="true"
         className=
-        "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700"
+        "item-modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700"
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* <!-- Modal content --> */}

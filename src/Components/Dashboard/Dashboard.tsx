@@ -14,7 +14,7 @@ const Dashboard = (): React.JSX.Element => {
         <div className='search-bar'>
           <SearchBar />
         </div>
-        <div className='add-item-button-container'>
+        <div className='item-button-container'>
           <button
             data-modal-target="item-modal"
             data-modal-toggle="item-modal"
@@ -22,7 +22,7 @@ const Dashboard = (): React.JSX.Element => {
             type="button"
             onClick={() => { setModalVisible((prevState) => !prevState); }}
           >
-            <IoIosAddCircle id='item-button' />
+            <IoIosAddCircle className='item-button' />
           </button>
         </div>
         <div className='avatar-container'>
