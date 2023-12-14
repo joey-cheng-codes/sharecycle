@@ -13,15 +13,15 @@ app.use(cors());
 
 app.use("/", express.static(path.resolve(__dirname, "../build")));
 
-// app.get('/foobar', (req, res) => {
-//   console.log('I am in the get request');
-//   res.sendStatus(200);
-// })
+app.get("/foobar", (req, res) => {
+  console.log("I am in the get request");
+  res.sendStatus(200);
+});
 
 
 app.use("/user", userRoute);
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   const defaultError = {
     log: "Express error handler caught unknown middleware error",
     status: 500,

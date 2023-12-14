@@ -19,7 +19,7 @@ const Login = (): React.JSX.Element => {
         })
       });
       if (response.ok) {
-        window.location.replace("/dashboard");
+        window.location.replace("dashboard");
       } else {
         throw new Error("An error has occured. Failed to login to account.");
       }

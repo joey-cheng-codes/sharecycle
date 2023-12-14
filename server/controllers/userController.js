@@ -52,10 +52,11 @@ userController.verifyUser = async (req, res, next) => {
 };
 
 userController.addItem = async (req, res, next) => {
+  console.log("Received a request to add an item:", req.body);
   if (req.body.itemName.length && req.body.description.length && req.body.loanDurationDays.length && req.body.categories.length) {
     try {
       const { itemName, description, loanDurationDays, categories, imageUrl } = req.body;
-      const item = await prisma.item.create({
+      const item = await prisma.Item.create({
         data: {
           itemName,
           description,
@@ -64,11 +65,14 @@ userController.addItem = async (req, res, next) => {
           loanDurationDays
         }
       });
+      console.log(item, "item response*****");
       res.locals.item = item;
       return next();
     }
     catch (err) {
-      return next(err);
+      // return next(err);
+      console.error("Error adding item:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   }
 };
