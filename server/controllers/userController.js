@@ -10,24 +10,11 @@ userController.createUser = async (req, res, next) => {
   if (req.body.firstName && req.body.lastName && req.body.email && req.body.username && req.body.password) {
     try {
       const { firstName, lastName, nickname, email, username, password, profileImageUrl } = req.body;
-      // let hashedPassword = "";
-      // bcrypt.genSalt(saltRounds, function (err, salt) {
-      //   if (err) {
-      //     throw err;
-      //   }
-      //   bcrypt.hash(password, salt, function (err, hash) {
-      //     if (err) {
-      //       throw err;
-      //     }
-      //     hashedPassword = hash;
-      //   });
-      // });
+      // // Generate salt asynchronously
+      const salt = await bcrypt.genSaltSync(saltRounds);
 
-      // Generate salt asynchronously
-      const salt = bcrypt.genSaltSync(saltRounds);
-
-      // Hash the password synchronously
-      const hashedPassword = bcrypt.hashSync(password, salt);
+      // // Hash the password synchronously
+      const hashedPassword = await bcrypt.hashSync(password, salt);
 
       const user = await prisma.user.create({
         data: {
@@ -62,23 +49,17 @@ userController.verifyUser = async (req, res, next) => {
       const user = await prisma.user.findUnique({
         where: {
           email,
-          password
         }
       });
       if (!user) {
         return res.status(401).json({ error: "Invalid email or password" });
       }
       console.log("login response", user);
-      bcrypt.compare(password, user.password, function (err, result) {
-        if (err) {
-          throw err;
-        }
-        if (result) {
-          res.locals.user = user;
-          return next();
-        }
-      });
-
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        res.locals.user = user;
+        return next();
+      }
     }
     catch (err) {
       return next(err);
