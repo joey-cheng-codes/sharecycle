@@ -1,5 +1,8 @@
 const express = require("express");
 const userController = require("../controllers/userController");
+const cookieController = require("../controllers/cookieController");
+const sessionController = require("../controllers/sessionController");
+
 const router = express.Router();
 
 // router.get('/',
@@ -11,14 +14,14 @@ const router = express.Router();
 router.post("/login",
   userController.verifyUser,
   (req, res) => {
-    res.status(200).json(res.locals.login);
+    res.status(200).json(res.locals.user);
   }
 );
 
 router.post("/signup",
   userController.createUser,
   (req, res) => {
-    res.status(200).json(res.locals.signup);
+    res.status(200).json(res.locals.user);
   }
 );
 
