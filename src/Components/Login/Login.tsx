@@ -8,7 +8,7 @@ const Login = (): React.JSX.Element => {
   const handleLoginSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch("/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -13,13 +13,13 @@ app.use(cors());
 
 app.use("/", express.static(path.resolve(__dirname, "../build")));
 
-app.get("/foobar", (req, res) => {
+app.get("/api/foobar", (req, res) => {
   console.log("I am in the get request");
   res.sendStatus(200);
 });
 
 
-app.use("/user", userRoute);
+app.use("/api/user", userRoute);
 
 app.use((err, req, res, next) => {
   const defaultError = {

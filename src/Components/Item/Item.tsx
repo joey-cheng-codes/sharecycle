@@ -55,7 +55,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/user/item", {
+      const response = await fetch("/api/user/item", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

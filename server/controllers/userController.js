@@ -53,7 +53,7 @@ userController.verifyUser = async (req, res, next) => {
 
 userController.addItem = async (req, res, next) => {
   console.log("Received a request to add an item:", req.body);
-  if (req.body.itemName.length && req.body.description.length && req.body.loanDurationDays.length && req.body.categories.length) {
+  if (req.body.itemName && req.body.description && req.body.loanDurationDays && req.body.categories.length) {
     try {
       const { itemName, description, loanDurationDays, categories, imageUrl } = req.body;
       const item = await prisma.Item.create({
@@ -74,6 +74,8 @@ userController.addItem = async (req, res, next) => {
       console.error("Error adding item:", err);
       return res.status(500).json({ error: "Internal Server Error" });
     }
+  } else {
+    return res.status(400).json({ error: "Missing required fields" });
   }
 };
 module.exports = userController;

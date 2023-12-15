@@ -13,7 +13,7 @@ const Signup = (): React.JSX.Element => {
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/user/signup", {
+      const response = await fetch("/api/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
