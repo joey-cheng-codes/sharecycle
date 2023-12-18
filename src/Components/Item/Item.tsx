@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Select from "react-select";
-
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -55,7 +54,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/user/item", {
+      const response = await fetch("/api/item", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -64,7 +63,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
           itemName,
           description,
           loanDurationDays,
-          categories,
+          categories: categories.map(category => ({ name: category.value })),
           imageUrl,
         })
 

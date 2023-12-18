@@ -110,7 +110,7 @@ const Signup = (): React.JSX.Element => {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Already have an account?
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign In Here</a>
+            <a href="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Sign In Here</a>
           </p>
         </div>
       </div>

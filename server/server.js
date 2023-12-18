@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
+const itemRoute = require("./routes/itemRoute");
 const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
@@ -17,7 +18,7 @@ app.use("/", express.static(path.resolve(__dirname, "../build")));
 
 app.use(
   session({
-    secret: "$2a$10$w0G1UjEFx9NGOjL6s08nc.b/YuTV4Vqkvk2rW2jM9KPGyUiaQ.H5y",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: false, httpOnly: true }
@@ -25,6 +26,8 @@ app.use(
 );
 
 app.use("/api/user", userRoute);
+app.use("/api/item", itemRoute);
+
 
 app.use((err, req, res, next) => {
   const defaultError = {
@@ -33,6 +36,7 @@ app.use((err, req, res, next) => {
     message: { err: "An error has occured." },
   };
   const errObj = Object.assign({}, defaultError, err);
+  console.log(errObj.log);
   return res.status(errObj.status).json(errObj.message);
 });
 
