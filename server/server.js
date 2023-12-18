@@ -1,23 +1,28 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
-const app = express();
 const path = require("path");
 const cors = require("cors");
+const session = require("express-session");
 const PORT = 3000;
 
-
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:8080", credentials: true }));
 
 app.use("/", express.static(path.resolve(__dirname, "../build")));
 
-app.get("/api/foobar", (req, res) => {
-  console.log("I am in the get request");
-  res.sendStatus(200);
-});
-
+app.use(
+  session({
+    secret: "$2a$10$w0G1UjEFx9NGOjL6s08nc.b/YuTV4Vqkvk2rW2jM9KPGyUiaQ.H5y",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: false, httpOnly: true }
+  })
+);
 
 app.use("/api/user", userRoute);
 
@@ -31,6 +36,4 @@ app.use((err, req, res, next) => {
   return res.status(errObj.status).json(errObj.message);
 });
 
-app.listen(PORT, () => {
-  console.log("Listening on port 3000... ShareCycle application");
-});
+app.listen(PORT, () => { console.log("Listening on port 3000... ShareCycle application"); });

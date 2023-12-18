@@ -11,11 +11,34 @@
 .logo-searchbar-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
-  width: 5000px;
+  justify-content: space-around;
 }
 
-#item-modal {
-  width: 1500px;
+.logo {
+  width: 100px;
+
+}
+
+.search-bar {
+  flex: 1;
+}
+
+.item-button-container {
+  width: 50px;
+}
+
+.item-button {
+  width: 30px;
+  height: 30px;
+}
+
+.avatar-container {
+  width: 50px;
+}
+
+/* Item Component */
+.item-modal {
+  max-width: 90vw;
 }

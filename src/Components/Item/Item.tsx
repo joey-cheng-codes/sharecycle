@@ -83,7 +83,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
 
   return (
     <div>
-      <div id="item-modal"
+      <div
         tabIndex={-1}
         aria-hidden="true"
         className=
