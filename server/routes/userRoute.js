@@ -11,8 +11,14 @@ const router = express.Router();
 //   }
 // );
 
+// router.get("/set-cookie", (req, res) => {
+//   // Set a test cookie
+//   res.cookie("testCookie", "123");
+//   res.status(200).json({ message: "Cookie set successfully" });
+// });
+
 router.post("/login",
-  userController.verifyUser,
+  userController.verifyUser, cookieController.setCookie,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }

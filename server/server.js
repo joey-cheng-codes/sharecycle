@@ -1,14 +1,15 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
-const app = express();
 const path = require("path");
 const cors = require("cors");
 const PORT = 3000;
 
-
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 
 app.use("/", express.static(path.resolve(__dirname, "../build")));
@@ -17,6 +18,11 @@ app.use("/", express.static(path.resolve(__dirname, "../build")));
 //   console.log('I am in the get request');
 //   res.sendStatus(200);
 // })
+app.get("/set-cookie", (req, res) => {
+  // Set a test cookie
+  res.cookie("testCookie", "123");
+  res.status(200).json({ message: "Cookie set successfully" });
+});
 
 
 app.use("/user", userRoute);
