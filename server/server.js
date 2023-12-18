@@ -15,12 +15,6 @@ app.use(cors({ origin: "http://localhost:8080", credentials: true }));
 
 app.use("/", express.static(path.resolve(__dirname, "../build")));
 
-
-// app.get('/foobar', (req, res) => {
-//   console.log('I am in the get request');
-//   res.sendStatus(200);
-// })
-
 app.use(
   session({
     secret: "$2a$10$w0G1UjEFx9NGOjL6s08nc.b/YuTV4Vqkvk2rW2jM9KPGyUiaQ.H5y",

@@ -9,7 +9,6 @@ cookieController.setCookie = function (req, res, next) {
     });
   }
   const userId = res.locals.user.id;
-  console.log(userId, "will i get the id back???");
   res.cookie("ssid", userId,);
   return next();
 };

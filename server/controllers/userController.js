@@ -41,9 +41,7 @@ userController.createUser = async (req, res, next) => {
 
 
 userController.verifyUser = async (req, res, next) => {
-  console.log("***** inside the verify user");
   if (req.body.email && req.body.password) {
-    console.log(req.body.email, req.body.password);
     try {
       const { email, password } = req.body;
       const user = await prisma.user.findUnique({
@@ -54,7 +52,6 @@ userController.verifyUser = async (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: "Invalid email or password" });
       }
-      console.log("login response", user);
       const match = await bcrypt.compare(password, user.password);
       if (match) {
         res.locals.user = user;
