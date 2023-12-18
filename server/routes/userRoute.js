@@ -11,14 +11,8 @@ const router = express.Router();
 //   }
 // );
 
-// router.get("/set-cookie", (req, res) => {
-//   // Set a test cookie
-//   res.cookie("testCookie", "123");
-//   res.status(200).json({ message: "Cookie set successfully" });
-// });
-
 router.post("/login",
-  userController.verifyUser, cookieController.setCookie,
+  userController.verifyUser, cookieController.setCookie, sessionController.isLoggedIn,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }
@@ -30,6 +24,5 @@ router.post("/signup",
     res.status(200).json(res.locals.user);
   }
 );
-
 
 module.exports = router;

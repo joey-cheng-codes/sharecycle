@@ -13,6 +13,7 @@ const Login = (): React.JSX.Element => {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
           email,
           password

@@ -60,6 +60,9 @@ userController.verifyUser = async (req, res, next) => {
         res.locals.user = user;
         return next();
       }
+      else {
+        return res.status(401).json({ error: "Bad password" });
+      }
     }
     catch (err) {
       return next(err);
