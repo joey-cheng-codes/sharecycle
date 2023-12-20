@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id              Int     @id @default(autoincrement())
-  username        String  @unique
+  id              Int          @id @default(autoincrement())
+  username        String       @unique
   nickname        String?
   firstName       String
   lastName        String
-  email           String  @unique
+  email           String       @unique
   password        String
   profileImageUrl String?
+  Friendship      Friendship[]
   items           Item[]
-  groups          Group[]
 }
 
 model Item {
@@ -29,23 +26,25 @@ model Item {
   itemName         String
   description      String
   rentCount        Int        @default(0)
-  categories       Category[]
   loanDurationDays Int
   imageUrl         String
-  user             User       @relation(fields: [userId], references: [id])
-  groups           Group[]
   userId           Int
+  user             User       @relation(fields: [userId], references: [id])
+  Category         Category[] @relation("ItemToCategory")
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  items Item[]
+  id   Int    @id @default(autoincrement())
+  name String
+  Item Item[] @relation("ItemToCategory")
 }
 
-model Group {
-  id    Int    @id @default(autoincrement())
-  name  String
-  user  User[]
-  items Item[]
+model Friendship {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  isActive  Boolean
+  friendId  Int
+  userId    Int
+  status    String
+  User      User     @relation(fields: [userId], references: [id])
 }

@@ -31,7 +31,7 @@ userController.createUser = async (req, res, next) => {
       return next();
     }
     catch (err) {
-      return next(err);
+      return next({ log: `${err}, error on userController.createUser`, status: 500, message: { err: "Failed to create user" } });
     }
   }
   else {

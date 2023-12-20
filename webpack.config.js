@@ -17,12 +17,13 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-    proxy: [
-      {
-        context: ["/api"],
-        target: "http://localhost:3000",
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        router: () => 'http://localhost:3000',
+        logLevel: 'debug'
       },
-    ],
+    },
     historyApiFallback: true,
   },
   module: {

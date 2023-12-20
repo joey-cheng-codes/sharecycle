@@ -13,4 +13,16 @@ cookieController.setCookie = function (req, res, next) {
   return next();
 };
 
+cookieController.getCookie = (req, res, next) => {
+  const cookieValue = req.cookies.ssid;
+  if (!cookieValue) {
+    return next({
+      log: "Error caught on cookieController.getCookie controller",
+      status: 500,
+      message: { err: "An error has occured." }
+    });
+  }
+  return next();
+};
+
 module.exports = cookieController;
