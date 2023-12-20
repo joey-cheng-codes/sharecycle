@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,9 +38,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     { value: "TOYS", label: "Toys & Games" }
   ];
 
-  const handleCategoryChange = (data: Category[]): void => {
-    setCategories(data);
-  };
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
@@ -49,6 +47,18 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     }
     console.log(imageUrl);
   };
+
+  const handleCategoryChange = (data: Category[]): void => {
+    const result = data.map((category) => {
+      return category.value;
+    });
+    setCategories(result);
+    console.log(result);
+  };
+
+  useEffect(() => {
+    handleCategoryChange(categoryNames);
+  }, []);
 
   const createItemHandler = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -79,6 +89,7 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
       console.error(err, "Error creating a new item.");
     }
   };
+
 
   return (
     <div>

@@ -11,16 +11,16 @@ datasource db {
 }
 
 model User {
-  id              Int     @id @default(autoincrement())
-  username        String  @unique
+  id              Int          @id @default(autoincrement())
+  username        String       @unique
   nickname        String?
   firstName       String
   lastName        String
-  email           String  @unique
+  email           String       @unique
   password        String
   profileImageUrl String?
   items           Item[]
-  groups          Group[]
+  Friendship      Friendship[]
 }
 
 model Item {
@@ -29,23 +29,25 @@ model Item {
   itemName         String
   description      String
   rentCount        Int        @default(0)
-  categories       Category[]
+  categories       Category[] @relation("ItemToCategory")
   loanDurationDays Int
   imageUrl         String
   user             User       @relation(fields: [userId], references: [id])
-  groups           Group[]
   userId           Int
 }
 
 model Category {
   id    Int    @id @default(autoincrement())
   name  String
-  items Item[]
+  items Item[] @relation("ItemToCategory")
 }
 
-model Group {
-  id    Int    @id @default(autoincrement())
-  name  String
-  user  User[]
-  items Item[]
+model Friendship {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  isActive  Boolean
+  friendId  Int
+  userId    Int
+  status    String // 'PENDING', 'ACCEPTED', 'REJECTED', etc.
+  User      User     @relation(fields: [userId], references: [id])
 }
