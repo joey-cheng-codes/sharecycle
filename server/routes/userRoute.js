@@ -6,14 +6,14 @@ const sessionController = require("../controllers/sessionController");
 const router = express.Router();
 
 router.post("/login",
-  userController.verifyUser, sessionController.isLoggedIn,
+  userController.verifyUser, sessionController.setSession,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }
 );
 
 router.post("/signup",
-  userController.createUser, sessionController.isLoggedIn,
+  userController.createUser, sessionController.setSession,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }

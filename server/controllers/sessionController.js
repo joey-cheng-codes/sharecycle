@@ -1,9 +1,9 @@
 const sessionController = {};
 
-sessionController.isLoggedIn = function (req, res, next) {
+sessionController.setSession = (req, res, next) => {
   if (!res.locals.user) {
     return next({
-      log: "Error caught on sessionController.isLoggedIn controller",
+      log: "Error caught on sessionController.setSession controller",
       status: 500,
       message: { err: "An error has occured." }
     });
@@ -19,5 +19,18 @@ sessionController.isLoggedIn = function (req, res, next) {
   // return res.redirect(302, "/user/signup");
   // }
 };
+
+sessionController.getCookie = (req, res, next) => {
+  const cookieValue = req.session.ssid;
+  if (!cookieValue) {
+    return next({
+      log: "Error caught on sessionController.getCookie controller",
+      status: 500,
+      message: { err: "An error has occured." }
+    });
+  }
+  return next();
+};
+
 
 module.exports = sessionController;

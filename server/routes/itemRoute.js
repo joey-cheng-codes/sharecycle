@@ -1,11 +1,13 @@
 const express = require("express");
-const cookieController = require("../controllers/cookieController");
+const sessionController = require("../controllers/sessionController");
 const itemController = require("../controllers/itemController");
 
 const router = express.Router();
 
-router.post("/", cookieController.getCookie, itemController.addItem, (req, res) => {
-  res.status(200).json(res.locals.item);
-});
+router.post("/",
+  sessionController.getCookie,
+  itemController.addItem, (req, res) => {
+    res.status(200).json(res.locals.item);
+  });
 
 module.exports = router;
