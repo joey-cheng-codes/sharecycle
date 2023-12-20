@@ -1,13 +1,23 @@
 const sessionController = {};
 
 sessionController.isLoggedIn = function (req, res, next) {
-  if (req.cookies.ssid) {
-    req.session.isLoggedIn = true;
-    return next();
+  if (!res.locals.user) {
+    return next({
+      log: "Error caught on sessionController.isLoggedIn controller",
+      status: 500,
+      message: { err: "An error has occured." }
+    });
   }
-  else {
-    return res.redirect(302, "/user/signup");
-  }
+
+  //   req.session.isLoggedIn = true;
+  //   return next();
+  // }
+  // else {
+  const userId = res.locals.user.id;
+  res.session("ssid", userId);
+  return next();
+  // return res.redirect(302, "/user/signup");
+  // }
 };
 
 module.exports = sessionController;
