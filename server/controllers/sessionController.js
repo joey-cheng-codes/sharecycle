@@ -13,17 +13,16 @@ sessionController.setSession = (req, res, next) => {
   return next();
 };
 
-sessionController.getCookie = (req, res, next) => {
+sessionController.verifySSID = (req, res, next) => {
   const cookieValue = req.session.ssid;
   if (!cookieValue) {
     return next({
-      log: "Error caught on sessionController.getCookie controller",
+      log: "Error caught on sessionController.verifySSID controller",
       status: 500,
       message: { err: "An error has occured." }
     });
   }
   return next();
 };
-
 
 module.exports = sessionController;
