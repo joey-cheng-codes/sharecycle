@@ -1,27 +1,32 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
-const app = express();
 const path = require("path");
 const cors = require("cors");
+const session = require("express-session");
 const PORT = 3000;
 
-
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:8080", credentials: true }));
 
 app.use("/", express.static(path.resolve(__dirname, "../build")));
 
-// app.get('/foobar', (req, res) => {
-//   console.log('I am in the get request');
-//   res.sendStatus(200);
-// })
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: false, httpOnly: true }
+  })
+);
 
 app.use("/user", userRoute);
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   const defaultError = {
     log: "Express error handler caught unknown middleware error",
     status: 500,

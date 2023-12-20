@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = (): React.JSX.Element => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -18,6 +20,7 @@ const Signup = (): React.JSX.Element => {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
           username,
           nickname,
@@ -29,7 +32,7 @@ const Signup = (): React.JSX.Element => {
         })
       });
       if (response.ok) {
-        window.location.replace("/");
+        navigate("/dashboard");
       } else {
         throw new Error("An error has occured. Failed to create a new account.");
       }

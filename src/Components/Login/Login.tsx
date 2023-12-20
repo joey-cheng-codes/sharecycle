@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from "react";
 
+
 const Login = (): React.JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,7 @@ const Login = (): React.JSX.Element => {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
           email,
           password
@@ -63,8 +65,8 @@ const Login = (): React.JSX.Element => {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
+            {"Don't have an account?"}
+            <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Sign up here</a>
           </p>
         </div>
       </div>
