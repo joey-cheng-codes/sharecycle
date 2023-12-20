@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
+const itemRoute = require("./routes/itemRoute");
 const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
@@ -24,7 +25,9 @@ app.use(
   })
 );
 
-app.use("/user", userRoute);
+app.use("/api/user", userRoute);
+app.use("/api/item", itemRoute);
+
 
 app.use((err, req, res, next) => {
   const defaultError = {
@@ -33,6 +36,7 @@ app.use((err, req, res, next) => {
     message: { err: "An error has occured." },
   };
   const errObj = Object.assign({}, defaultError, err);
+  console.log(errObj.log);
   return res.status(errObj.status).json(errObj.message);
 });
 
