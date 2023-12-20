@@ -15,7 +15,7 @@ itemController.addItem = async (req, res, next) => {
           },
           imageUrl,
           loanDurationDays,
-          userId: Number(req.cookies.ssid)
+          userId: Number(req.session.ssid)
         }
       });
       res.locals.item = item;
