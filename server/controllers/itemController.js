@@ -3,8 +3,6 @@ const itemController = {};
 const prisma = new PrismaClient();
 
 itemController.addItem = async (req, res, next) => {
-  console.log(req.cookies.ssid, "will i get this info??");
-  console.log("Received a request to add an item:", req.body);
   if (req.body.itemName && req.body.description && req.body.loanDurationDays && req.body.categories.length) {
     try {
 
@@ -18,10 +16,9 @@ itemController.addItem = async (req, res, next) => {
           },
           imageUrl,
           loanDurationDays,
-          userId: Number(req.cookies.ssid)
+          userId: Number(req.session.ssid)
         }
       });
-      console.log(item, "item response*****");
       res.locals.item = item;
       return next();
     }

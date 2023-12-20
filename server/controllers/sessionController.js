@@ -8,16 +8,9 @@ sessionController.setSession = (req, res, next) => {
       message: { err: "An error has occured." }
     });
   }
-
-  //   req.session.isLoggedIn = true;
-  //   return next();
-  // }
-  // else {
   const userId = res.locals.user.id;
-  res.session("ssid", userId);
+  req.session.ssid = userId;
   return next();
-  // return res.redirect(302, "/user/signup");
-  // }
 };
 
 sessionController.getCookie = (req, res, next) => {
