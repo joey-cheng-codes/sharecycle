@@ -13,7 +13,9 @@ itemController.addItem = async (req, res, next) => {
         data: {
           itemName,
           description,
-          categories,
+          categories: {
+            create: categories
+          },
           imageUrl,
           loanDurationDays,
           userId: Number(req.cookies.ssid)

@@ -49,16 +49,8 @@ const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
   };
 
   const handleCategoryChange = (data: Category[]): void => {
-    const result = data.map((category) => {
-      return category.value;
-    });
-    setCategories(result);
-    console.log(result);
+    setCategories(data);
   };
-
-  useEffect(() => {
-    handleCategoryChange(categoryNames);
-  }, []);
 
   const createItemHandler = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
