@@ -3,6 +3,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import Avatar from "../Avatar/Avatar";
 import { IoIosAddCircle } from "react-icons/io";
 import Item from "../Item/Item";
+import Post from "../Post/Post";
+
 const Dashboard = (): React.JSX.Element => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -30,6 +32,7 @@ const Dashboard = (): React.JSX.Element => {
         </div>
       </div>
       {modalVisible && <Item setModalVisible={setModalVisible} />}
+      <Post />
     </div>
   );
 };
