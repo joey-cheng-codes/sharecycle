@@ -37,4 +37,37 @@ itemController.addItem = async (req, res, next) => {
   }
 };
 
+
+itemController.getAllItems = async (req, res, next) => {
+  const userId = req.session.ssid;
+  console.log(userId, "does this give me my user??? ");
+  if (userId) {
+    try {
+      const items = await prisma.Item.findMany(
+        {
+          where: {
+            userId: userId,
+          }
+        }
+      );
+      console.log(items, "will i get my items");
+      res.locals.allItems = items;
+    }
+    catch (err) {
+      return next({
+        log: `${err}, Error caught on itemController.getAllItems`,
+        status: 500,
+        message: { err: "Error displaying items." }
+      });
+    }
+  }
+  else {
+    return next({
+      log: "Error caught on itemController.getAllItems",
+      status: 400,
+      message: { err: "Error retrieving items." }
+    });
+  }
+};
+
 module.exports = itemController;
