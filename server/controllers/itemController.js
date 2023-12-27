@@ -1,6 +1,9 @@
 const { PrismaClient } = require("@prisma/client");
 const itemController = {};
 const prisma = new PrismaClient();
+// const { v4: uuidv4 } = require("uuid");
+
+// const uuid = uuidv4();
 
 itemController.addItem = async (req, res, next) => {
   if (req.body.itemName && req.body.description && req.body.loanDurationDays && req.body.categories.length) {
@@ -40,7 +43,6 @@ itemController.addItem = async (req, res, next) => {
 
 itemController.getAllItems = async (req, res, next) => {
   const userId = req.session.ssid;
-  console.log(userId, "does this give me my user??? ");
   if (userId) {
     try {
       const items = await prisma.Item.findMany(
@@ -50,8 +52,8 @@ itemController.getAllItems = async (req, res, next) => {
           }
         }
       );
-      console.log(items, "will i get my items");
       res.locals.allItems = items;
+      return next();
     }
     catch (err) {
       return next({

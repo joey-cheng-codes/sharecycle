@@ -4,6 +4,10 @@ const saltRounds = 10;
 const userController = {};
 
 const prisma = new PrismaClient();
+// const { v4: uuidv4 } = require("uuid");
+
+// const uuid = uuidv4();
+
 
 userController.createUser = async (req, res, next) => {
 

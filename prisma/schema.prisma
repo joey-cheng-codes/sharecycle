@@ -8,43 +8,50 @@ datasource db {
 }
 
 model User {
-  id              Int          @id @default(autoincrement())
-  username        String       @unique
+  id              String   @id @default(uuid())
+  username        String   @unique
   nickname        String?
   firstName       String
   lastName        String
-  email           String       @unique
+  email           String   @unique
   password        String
   profileImageUrl String?
-  Friendship      Friendship[]
+  friendIds       String[]
   items           Item[]
 }
 
 model Item {
-  id               Int        @id @default(autoincrement())
+  id               String     @id @default(uuid())
   createDate       DateTime   @default(now())
   itemName         String
   description      String
   rentCount        Int        @default(0)
   loanDurationDays Int
   imageUrl         String
-  userId           Int
+  userId           String
   user             User       @relation(fields: [userId], references: [id])
   Category         Category[] @relation("ItemToCategory")
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(uuid())
   name String
   Item Item[] @relation("ItemToCategory")
 }
 
+model FriendshipRequest {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  senderId   String
+  receiverId String
+  status     String // e.g., "pending", "accepted", "rejected"
+
+  @@unique([senderId, receiverId], name: "senderId_receiverId")
+}
+
 model Friendship {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  isActive  Boolean
-  friendId  Int
-  userId    Int
-  status    String
-  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+  friendsId String[]
 }
