@@ -1,9 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const itemController = {};
 const prisma = new PrismaClient();
-// const { v4: uuidv4 } = require("uuid");
-
-// const uuid = uuidv4();
 
 itemController.addItem = async (req, res, next) => {
   if (req.body.itemName && req.body.description && req.body.loanDurationDays && req.body.categories.length) {
@@ -18,7 +15,7 @@ itemController.addItem = async (req, res, next) => {
           },
           imageUrl,
           loanDurationDays,
-          userId: Number(req.session.ssid)
+          userId: req.session.ssid
         }
       });
       res.locals.item = item;

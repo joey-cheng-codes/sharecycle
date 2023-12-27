@@ -1,4 +1,3 @@
-import { create } from "domain";
 import React from "react";
 
 interface ItemProps {
@@ -9,14 +8,7 @@ interface ItemProps {
   loanDurationDays: number,
   imageUrl: string,
   userId: string,
-  // category: Category[]
 }
-
-// interface Category {
-//   id: number,
-//   name: string,
-//   item: ItemProps[]
-// }
 
 const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId }: ItemProps): React.JSX.Element => {
   return (

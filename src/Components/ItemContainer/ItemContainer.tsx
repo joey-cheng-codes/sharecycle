@@ -28,7 +28,7 @@ const CardHolder = (): React.JSX.Element => {
       }
     };
     fetchData();
-  }, [cards]);
+  }, []);
 
   const createItems = cards.map((card) => {
     console.log(card, "am i getting my data?????******");

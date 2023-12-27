@@ -30,13 +30,13 @@ model Item {
   imageUrl         String
   userId           String
   user             User       @relation(fields: [userId], references: [id])
-  Category         Category[] @relation("ItemToCategory")
+  categories       Category[] @relation("ItemToCategory")
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String
-  Item Item[] @relation("ItemToCategory")
+  id    String @id @default(uuid())
+  name  String
+  items Item[] @relation("ItemToCategory")
 }
 
 model FriendshipRequest {
@@ -46,7 +46,8 @@ model FriendshipRequest {
   receiverId String
   status     String // e.g., "pending", "accepted", "rejected"
 
-  @@unique([senderId, receiverId], name: "senderId_receiverId")
+  @@index(fields: [senderId])
+  @@index(fields: [receiverId])
 }
 
 model Friendship {
