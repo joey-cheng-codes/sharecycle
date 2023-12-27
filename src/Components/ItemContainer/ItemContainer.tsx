@@ -32,10 +32,10 @@ const CardHolder = (): React.JSX.Element => {
 
   const createItems = cards.map((card) => {
     console.log(card, "am i getting my data?????******");
-    const { itemName, createDate, id, description, rentCount, loanDurationDays, imageUrl, userId } = card;
+    const { itemName, createDate, id, description, rentCount, loanDurationDays, imageUrl, userId, status } = card;
     return (
       <div key={id}>
-        <Item itemName={itemName} key={id} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} />
+        <Item itemName={itemName} key={id} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} />
       </div>
     );
   });

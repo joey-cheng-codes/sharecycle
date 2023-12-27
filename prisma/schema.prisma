@@ -29,6 +29,7 @@ model Item {
   loanDurationDays Int
   imageUrl         String
   userId           String
+  status           String     @default("available") // e.g., "unavailable", "available"
   user             User       @relation(fields: [userId], references: [id])
   categories       Category[] @relation("ItemToCategory")
 }

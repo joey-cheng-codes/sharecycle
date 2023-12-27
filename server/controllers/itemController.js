@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 itemController.addItem = async (req, res, next) => {
   if (req.body.itemName && req.body.description && req.body.loanDurationDays && req.body.categories.length) {
     try {
-      const { itemName, description, loanDurationDays, categories, imageUrl } = req.body;
+      const { itemName, description, loanDurationDays, categories, imageUrl, status } = req.body;
       const item = await prisma.Item.create({
         data: {
           itemName,
@@ -15,7 +15,8 @@ itemController.addItem = async (req, res, next) => {
           },
           imageUrl,
           loanDurationDays,
-          userId: req.session.ssid
+          status,
+          userId: req.session.ssid,
         }
       });
       res.locals.item = item;

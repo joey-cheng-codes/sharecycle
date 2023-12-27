@@ -8,9 +8,10 @@ interface ItemProps {
   loanDurationDays: number,
   imageUrl: string,
   userId: string,
+  status: string,
 }
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId }: ItemProps): React.JSX.Element => {
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status }: ItemProps): React.JSX.Element => {
   return (
     <div>
       <p>
@@ -21,6 +22,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
         {rentCount}
         {loanDurationDays}
         {imageUrl}
+        {status}
       </p>
       {/* <div className="min-h-screen bg-gray-100 flex justify-start items-start">
         <div className="max-w-xs container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
