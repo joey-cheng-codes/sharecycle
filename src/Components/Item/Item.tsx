@@ -2,7 +2,7 @@ import React from "react";
 import { ItemProps } from "../../types";
 
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status }: ItemProps): React.JSX.Element => {
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories }: ItemProps): React.JSX.Element => {
 
   const formatCreateDate = (rawDate: string): string => {
     const date = new Date(rawDate);
@@ -25,11 +25,17 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
         <div className="max-w-xs container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
           <div>
             <h1 className="text-2xl mt-2 ml-4 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">{itemName}</h1>
-            <p>{description} {rentCount} {loanDurationDays} {imageUrl}</p>
-            <p className="ml-4 mt-1 mb-2 text-gray-700 hover:underline cursor-pointer">Category Placeholder</p>
+            <p>description:{description}</p>
+            <p>borrowed counter: {rentCount} </p>
+            <p>loan duration day: {loanDurationDays} </p>
+            <p className="ml-4 mt-1 mb-2 text-gray-700 hover:underline cursor-pointer">
+              Categories: {
+                categories?.map(category => category.name).join(", ")
+              }</p>
           </div>
           <img className="w-full cursor-pointer" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
-          <div className="flex p-4 justify-between">
+
+          <div className="flex-col p-4 justify-between">
             <div className="flex items-center space-x-2">
               <img className="w-10 rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="sara" />
               <h2 className="text-gray-800 font-bold cursor-pointer">User: {username}</h2>

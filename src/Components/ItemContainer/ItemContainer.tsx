@@ -18,6 +18,7 @@ const ItemContainer = (): React.JSX.Element => {
         if (response.ok) {
           const data = await response.json();
           setCards(data);
+
           const responseTwo = await fetch(`/api/user/:${data.userId}`, {
             method: "GET",
             headers:
@@ -48,14 +49,14 @@ const ItemContainer = (): React.JSX.Element => {
   let count = 0;
   const createItems = cards.map((card) => {
 
-    const { itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status } = card;
+    const { itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status, categories } = card;
 
     if (user) {
       const { id, username, nickname, firstName, lastName, email, password, profileImageUrl }: UserProps = user;
       count++;
       return (
         <div key={`${id}-${count}`} >
-          <Item itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} username={username} />
+          <Item itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} username={username} categories={categories} />
         </div >
       );
     }
@@ -64,7 +65,9 @@ const ItemContainer = (): React.JSX.Element => {
   return (
     <div>
       <p>I am in the item container</p>
-      {createItems}
+      <div className='items flex gap-3'>
+        {createItems}
+      </div>
     </div>
   );
 

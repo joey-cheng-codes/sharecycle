@@ -20,5 +20,12 @@ export interface ItemProps {
   userId: string,
   status: string,
   user?: UserProps
-  username?: string;
+  username?: string,
+  categories?: CategoriesProps[]
+}
+
+export interface CategoriesProps {
+  id: string,
+  name: string,
+  items: ItemProps[],
 }
