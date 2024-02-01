@@ -45,7 +45,6 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
     if (file) {
       setImageUrl(() => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8D-G0b8ka5kyWMioBDY98SOJCYt8Xy7kklA&usqp=CAU");
     }
-    console.log(imageUrl);
   };
 
   const handleCategoryChange = (data: Category[]): void => {

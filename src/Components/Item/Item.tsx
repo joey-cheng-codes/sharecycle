@@ -1,21 +1,23 @@
 import React from "react";
-import { UserProps } from "../../types";
+import { ItemProps } from "../../types";
 
-interface ItemProps {
-  itemName: string,
-  createDate: string,
-  description: string,
-  rentCount: number,
-  loanDurationDays: number,
-  imageUrl: string,
-  userId: string,
-  status: string,
-  user?: UserProps
-}
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status, user }: ItemProps): React.JSX.Element => {
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status }: ItemProps): React.JSX.Element => {
 
-  // const { id, username, nickname, firstName, lastName, email, password, profileImageUrl } = user;
+  const formatCreateDate = (rawDate: string): string => {
+    const date = new Date(rawDate);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear() % 100;
+
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedYear = year < 10 ? `0${year}` : year;
+
+    return `${formattedMonth}/${formattedDay}/${formattedYear}`;
+  };
+
+  const date = formatCreateDate(createDate);
 
   return (
     <div>
@@ -30,7 +32,9 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
           <div className="flex p-4 justify-between">
             <div className="flex items-center space-x-2">
               <img className="w-10 rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="sara" />
-              <h2 className="text-gray-800 font-bold cursor-pointer">User: , {createDate}</h2>
+              <h2 className="text-gray-800 font-bold cursor-pointer">User: {username}</h2>
+              <h2 className="text-gray-800 font-bold cursor-pointer">Date: {date}</h2>
+              <h2 className="text-gray-800 font-bold cursor-pointer">Status: {status}</h2>
             </div>
             <div className="flex space-x-2">
               <div className="flex space-x-1 items-center">

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
-import { UserProps } from "../../types";
+import { UserProps, ItemProps } from "../../types";
 
 const ItemContainer = (): React.JSX.Element => {
-  const [cards, setCards] = useState([]);
-  const [user, setUser] = useState(null);
+  const [cards, setCards] = useState<ItemProps[]>([]);
+  const [user, setUser] = useState({} as UserProps);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,19 +45,18 @@ const ItemContainer = (): React.JSX.Element => {
     };
     fetchData();
   }, []);
-
+  let count = 0;
   const createItems = cards.map((card) => {
-    console.log(card, "am i getting my data?????******");
-    const { itemName, createDate, id, description, rentCount, loanDurationDays, imageUrl, userId, status } = card;
-    // const user = users.find((user) => {
-    //   user.id === userId;
-    // });
+
+    const { itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status } = card;
 
     if (user) {
+      const { id, username, nickname, firstName, lastName, email, password, profileImageUrl }: UserProps = user;
+      count++;
       return (
-        <div key={id}>
-          <Item itemName={itemName} key={id} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} user={user} />
-        </div>
+        <div key={`${id}-${count}`} >
+          <Item itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} username={username} />
+        </div >
       );
     }
   });
