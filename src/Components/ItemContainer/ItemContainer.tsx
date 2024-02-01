@@ -4,7 +4,7 @@ import { UserProps } from "../../types";
 
 const ItemContainer = (): React.JSX.Element => {
   const [cards, setCards] = useState([]);
-  const [users, setUsers] = useState<UserProps[]>([]);
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,8 +27,8 @@ const ItemContainer = (): React.JSX.Element => {
             credentials: "include",
           });
           if (responseTwo.ok) {
-            const userData = await response.json();
-            setUsers(userData);
+            const userData = await responseTwo.json();
+            setUser(userData);
           }
           else {
             throw new Error("An error has occured trying to retrieve nickname");
@@ -49,9 +49,10 @@ const ItemContainer = (): React.JSX.Element => {
   const createItems = cards.map((card) => {
     console.log(card, "am i getting my data?????******");
     const { itemName, createDate, id, description, rentCount, loanDurationDays, imageUrl, userId, status } = card;
-    const user = users.find((user) => {
-      user.id === userId;
-    });
+    // const user = users.find((user) => {
+    //   user.id === userId;
+    // });
+
     if (user) {
       return (
         <div key={id}>

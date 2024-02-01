@@ -73,7 +73,7 @@ userController.verifyUser = async (req, res, next) => {
 
 userController.getUser = async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.session.ssid;
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
