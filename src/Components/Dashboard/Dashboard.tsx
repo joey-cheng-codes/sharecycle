@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import Avatar from "../Avatar/Avatar";
 import { IoIosAddCircle } from "react-icons/io";
-import Item from "../Item/Item";
+import ItemForm from "../ItemForm/ItemForm";
+import ItemContainer from "../ItemContainer/ItemContainer";
+
 const Dashboard = (): React.JSX.Element => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -29,7 +31,8 @@ const Dashboard = (): React.JSX.Element => {
           <Avatar />
         </div>
       </div>
-      {modalVisible && <Item setModalVisible={setModalVisible} />}
+      {modalVisible && <ItemForm setModalVisible={setModalVisible} />}
+      <ItemContainer />
     </div>
   );
 };

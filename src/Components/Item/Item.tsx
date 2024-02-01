@@ -1,162 +1,71 @@
-import React, { useState } from "react";
-import Select from "react-select";
-interface ItemProps {
-  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-interface Category {
-  value: string
-  label: string
-}
-
-const Item = ({ setModalVisible }: ItemProps): React.JSX.Element => {
-  const [itemName, setItemName] = useState("");
-  const [loanDurationDays, setLoanDurationDays] = useState(0);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const categoryNames: Category[] = [
-    { value: "APPL", label: "Appliances" },
-    { value: "ARTS", label: "Arts, Crafts, & Sewing" },
-    { value: "AUTO", label: "Automative" },
-    { value: "BABY", label: "Baby Products" },
-    { value: "BEAU", label: "Beauty & Personal Care" },
-    { value: "BMM", label: "Books, Movies, & Music" },
-    { value: "CLOTH", label: "Clothing / Shoes / Accessories" },
-    { value: "DIY", label: "DIY & Home Improvement" },
-    { value: "ELEC", label: "Electronics" },
-    { value: "EXER", label: "Fitness & Exercise Equipment" },
-    { value: "FURN", label: "Furniture & Decor" },
-    { value: "FOOD", label: "Grocery & Gourmet Foods" },
-    { value: "HEA", label: "Health" },
-    { value: "HOME", label: "Home & Kitchen" },
-    { value: "OFFIC", label: "Office & School Supplies" },
-    { value: "OUT", label: "Outdoor & Gardening" },
-    { value: "PARTY", label: "Party & Event Supplies" },
-    { value: "PET", label: "Pet Supplies" },
-    { value: "SPORTS", label: "Sports & Outdoor Gear" },
-    { value: "TOYS", label: "Toys & Games" }
-  ];
+import React from "react";
+import { ItemProps } from "../../types";
 
 
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories }: ItemProps): React.JSX.Element => {
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageUrl(() => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8D-G0b8ka5kyWMioBDY98SOJCYt8Xy7kklA&usqp=CAU");
-    }
-    console.log(imageUrl);
+  const formatCreateDate = (rawDate: string): string => {
+    const date = new Date(rawDate);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear() % 100;
+
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedYear = year < 10 ? `0${year}` : year;
+
+    return `${formattedMonth}/${formattedDay}/${formattedYear}`;
   };
 
-  const handleCategoryChange = (data: Category[]): void => {
-    setCategories(data);
-  };
-
-  const createItemHandler = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("/api/item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          itemName,
-          description,
-          loanDurationDays,
-          categories: categories.map(category => ({ name: category.value })),
-          imageUrl,
-        })
-
-      });
-      if (response.ok) {
-        console.log(response);
-        window.location.replace("/dashboard");
-      } else {
-        throw new Error("An error has occured. Failed to createa  new item.");
-      }
-    }
-    catch (err) {
-      console.error(err, "Error creating a new item.");
-    }
-  };
-
+  const date = formatCreateDate(createDate);
 
   return (
     <div>
-      <div
-        tabIndex={-1}
-        aria-hidden="true"
-        className=
-        " w-[100%] md:w-[80%] bg-white rounded-lg shadow overflow-hidden dark:bg-gray-700"
-      >
-        <div className="relative p-4 w-full max-w-md max-h-full">
-          {/* <!-- Modal content --> */}
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            {/* <!-- Modal header --> */}
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Create New Item
-              </h3>
-              <button
-                onClick={() => { setModalVisible(false); }}
-                type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="item-modal">
-                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
+      <div className="min-h-screen bg-gray-100 flex justify-start items-start">
+        <div className="max-w-xs container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+          <div>
+            <h1 className="text-2xl mt-2 ml-4 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">{itemName}</h1>
+            <p>description:{description}</p>
+            <p>borrowed counter: {rentCount} </p>
+            <p>loan duration day: {loanDurationDays} </p>
+            <p className="ml-4 mt-1 mb-2 text-gray-700 hover:underline cursor-pointer">
+              Categories: {
+                categories?.map(category => category.name).join(", ")
+              }</p>
+          </div>
+          <img className="w-full cursor-pointer" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
+
+          <div className="flex-col p-4 justify-between">
+            <div className="flex items-center space-x-2">
+              <img className="w-10 rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="sara" />
+              <h2 className="text-gray-800 font-bold cursor-pointer">User: {username}</h2>
+              <h2 className="text-gray-800 font-bold cursor-pointer">Date: {date}</h2>
+              <h2 className="text-gray-800 font-bold cursor-pointer">Status: {status}</h2>
             </div>
-            {/* <!-- Modal body --> */}
-            <form onSubmit={(e) => { return createItemHandler(e); }} className="p-4 md:p-5">
-              <div className="grid gap-4 mb-4 grid-cols-2">
-                <div className="col-span-2">
-                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Name</label>
-                  <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setItemName(e.target.value); }} type="text" name="item-name" id="item-name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type item name" required />
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label htmlFor="loan-days" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max Loan Duration (days)</label>
-                  <input
-                    onChange={() => setLoanDurationDays((prevState) => { return prevState + 1; })} type="number" name="loan-days" id="loan-days" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="3" required />
-                </div>
-                <div className="col-span-2">
-                  <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories(select one more)</label>
-                  <Select
-                    closeMenuOnSelect={false}
-                    isMulti
-                    options={categoryNames}
-                    id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    onChange={handleCategoryChange}
-                  />
-                </div>
-                <div className="col-span-2">
-                  <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Description</label>
-                  <textarea
-                    onChange={(e) => { setDescription(e.target.value); }}
-                    id="description"
-                    rows={8}
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write item description or notes to borrowee here"></textarea>
-                </div>
-                <div className="col-span-2">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload Image</label>
-                  <input
-                    onChange={handleImageChange}
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
-                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, or JPG (MAX. 800x400px).</p>
-                </div>
+            <div className="flex space-x-2">
+              <div className="flex space-x-1 items-center">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gray-600 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </span>
+                <span>22</span>
               </div>
-              <button type="submit" className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
-                Create
-              </button>
-            </form>
+              <div className="flex space-x-1 items-center">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-red-500 hover:text-red-400 transition duration-100 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                  </svg>
+                </span>
+                <span>20</span>
+              </div>
+              <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4 cursor-pointer">Information</span>
+            </div>
           </div>
         </div>
-      </div >
+      </div>
+    </div>
 
-    </div >
   );
 };
 
