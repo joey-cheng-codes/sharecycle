@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
+import { UserProps } from "../../types";
 
-
-const CardHolder = (): React.JSX.Element => {
+const ItemContainer = (): React.JSX.Element => {
   const [cards, setCards] = useState([]);
+  const [users, setUsers] = useState<UserProps[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,8 +17,23 @@ const CardHolder = (): React.JSX.Element => {
         });
         if (response.ok) {
           const data = await response.json();
-          console.log(data, "helllooo from the front end");
           setCards(data);
+          const responseTwo = await fetch(`/api/user/:${data.userId}`, {
+            method: "GET",
+            headers:
+            {
+              "Content-Type": "application/json"
+            },
+            credentials: "include",
+          });
+          if (responseTwo.ok) {
+            const userData = await response.json();
+            setUsers(userData);
+          }
+          else {
+            throw new Error("An error has occured trying to retrieve nickname");
+          }
+
         }
         else {
           throw new Error("An error has occured trying to display items..");
@@ -33,18 +49,25 @@ const CardHolder = (): React.JSX.Element => {
   const createItems = cards.map((card) => {
     console.log(card, "am i getting my data?????******");
     const { itemName, createDate, id, description, rentCount, loanDurationDays, imageUrl, userId, status } = card;
-    return (
-      <div key={id}>
-        <Item itemName={itemName} key={id} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} />
-      </div>
-    );
+    const user = users.find((user) => {
+      user.id === userId;
+    });
+    if (user) {
+      return (
+        <div key={id}>
+          <Item itemName={itemName} key={id} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} user={user} />
+        </div>
+      );
+    }
   });
+
   return (
     <div>
       <p>I am in the item container</p>
       {createItems}
     </div>
   );
+
 };
 
-export default CardHolder;
+export default ItemContainer;

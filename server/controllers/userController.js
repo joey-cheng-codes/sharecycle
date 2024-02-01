@@ -4,10 +4,6 @@ const saltRounds = 10;
 const userController = {};
 
 const prisma = new PrismaClient();
-// const { v4: uuidv4 } = require("uuid");
-
-// const uuid = uuidv4();
-
 
 userController.createUser = async (req, res, next) => {
 
@@ -74,4 +70,28 @@ userController.verifyUser = async (req, res, next) => {
   }
 };
 
+
+userController.getUser = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      return res.status(401).json(
+        { error: "Could not retrive information on the user." }
+      );
+    }
+    else {
+      res.json(user);
+      return next();
+    }
+
+  }
+  catch (err) {
+    return next({ log: `${err}, error on userController.getUser`, status: 500, message: { err: "Failed to retrieve user data" } });
+  }
+};
 module.exports = userController;

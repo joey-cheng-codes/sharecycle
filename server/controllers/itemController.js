@@ -2,6 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const itemController = {};
 const prisma = new PrismaClient();
 
+
 itemController.addItem = async (req, res, next) => {
   if (req.body.itemName && req.body.description && req.body.loanDurationDays && req.body.categories.length) {
     try {

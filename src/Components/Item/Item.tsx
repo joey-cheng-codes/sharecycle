@@ -1,4 +1,5 @@
 import React from "react";
+import { UserProps } from "../../types";
 
 interface ItemProps {
   itemName: string,
@@ -9,22 +10,16 @@ interface ItemProps {
   imageUrl: string,
   userId: string,
   status: string,
+  user?: UserProps
 }
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status }: ItemProps): React.JSX.Element => {
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, status, user }: ItemProps): React.JSX.Element => {
+
+  // const { id, username, nickname, firstName, lastName, email, password, profileImageUrl } = user;
+
   return (
     <div>
-      <p>
-        {itemName}
-        {createDate}
-        {userId}
-        {description}
-        {rentCount}
-        {loanDurationDays}
-        {imageUrl}
-        {status}
-      </p>
-      {/* <div className="min-h-screen bg-gray-100 flex justify-start items-start">
+      <div className="min-h-screen bg-gray-100 flex justify-start items-start">
         <div className="max-w-xs container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
           <div>
             <h1 className="text-2xl mt-2 ml-4 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">{itemName}</h1>
@@ -35,7 +30,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
           <div className="flex p-4 justify-between">
             <div className="flex items-center space-x-2">
               <img className="w-10 rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="sara" />
-              <h2 className="text-gray-800 font-bold cursor-pointer">User Id: {userId}, {createDate}</h2>
+              <h2 className="text-gray-800 font-bold cursor-pointer">User: , {createDate}</h2>
             </div>
             <div className="flex space-x-2">
               <div className="flex space-x-1 items-center">
@@ -58,7 +53,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
 
   );

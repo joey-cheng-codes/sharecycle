@@ -18,4 +18,10 @@ router.post("/signup",
   }
 );
 
+router.get("/:userId", userController.getUser,
+  (req, res) => {
+    res.status(200).json(res.locals.user);
+  }
+);
+
 module.exports = router;
