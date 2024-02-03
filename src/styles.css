@@ -18,7 +18,8 @@ html {
 
 /* Login */
 
-.login-container {
+.login-container,
+.signup-container {
   background-image: linear-gradient(109.6deg, rgba(61, 131, 97, 1) 11.2%, rgba(28, 103, 88, 1) 91.1%);
   width: 100vw;
   height: 100vh;

@@ -41,21 +41,21 @@ const Login = (): React.JSX.Element => {
             <h1 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in</h1>
             <form onSubmit={handleLoginSubmission} action="#" method="POST">
               <div className="flex w-full component-preview p-4 items-center justify-center gap-2 font-sans">
-                <div className="form-control w-96 max-w-xs gap-y-2">
+                <div className="form-control w-96 max-w-xs gap-y-1">
                   <label className="label">
-                    <span className="label-text">Email Address</span>
+                    <span className="label-text">Email Address:</span>
                   </label>
                   <Input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value); }} id="email" name="email" type="email" placeholder="email address" autoComplete="email" color="primary" required className='w-full max-w-xs'></Input>
                   <label className="label">
-                    <span className="label-text">Password</span>
+                    <span className="label-text">Password:</span>
                     <span>
                       <Link href="#" target="_blank" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</Link>
                     </span>
                   </label>
                   <Input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value); }} id="password" name="password" type="password" placeholder="password" color="primary" required className='w-full max-w-xs'></Input>
                   <Button type="submit" fullWidth color="primary">Sign in</Button>
-                  <p className="text-sm text-gray-500">{"Don't have an account?"}
-                    <Link href="/signup" target="_blank" className="font-semibold text-indigo-600 hover:text-indigo-500"> Sign up here</Link>
+                  <p className="text-sm text-gray-500">{"Don't have an account? "}
+                    <Link href="/signup" target="_blank" className="font-semibold text-indigo-600 hover:text-indigo-500">Sign up here</Link>
                   </p>
                 </div>
               </div>
