@@ -4,6 +4,8 @@ import Avatar from "../Avatar/Avatar";
 import { IoIosAddCircle } from "react-icons/io";
 import ItemForm from "../ItemForm/ItemForm";
 import ItemContainer from "../ItemContainer/ItemContainer";
+import { Button } from "react-daisyui";
+import logo from "../../Images/sharecycle-blue.png";
 
 const Dashboard = (): React.JSX.Element => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,13 +13,13 @@ const Dashboard = (): React.JSX.Element => {
     <div className='dashboard-container'>
       <div className='logo-searchbar-container'>
         <div className='logo'>
-          <h1>ShareCycle</h1>
+          <img src={logo} />
         </div>
         <div className='search-bar'>
           <SearchBar />
         </div>
         <div className='item-button-container'>
-          <button
+          <Button
             data-modal-target="item-modal"
             data-modal-toggle="item-modal"
             className="mr-4"
@@ -25,7 +27,7 @@ const Dashboard = (): React.JSX.Element => {
             onClick={() => { setModalVisible((prevState) => !prevState); }}
           >
             <IoIosAddCircle className='item-button' />
-          </button>
+          </Button>
         </div>
         <div className='avatar-container'>
           <Avatar />
