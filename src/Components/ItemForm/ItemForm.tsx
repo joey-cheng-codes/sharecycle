@@ -47,7 +47,6 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
   };
 
   const handleCategoryChange = (data: Category[]): void => {
-    console.log(data, "what does this look ilke?? ");
     setCategories(data);
   };
 
@@ -70,7 +69,6 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
 
       });
       if (response.ok) {
-        console.log(response);
         window.location.replace("/dashboard");
       } else {
         throw new Error("An error has occured. Failed to createa  new item.");
