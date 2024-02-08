@@ -48,7 +48,8 @@ itemController.getAllItems = async (req, res, next) => {
         {
           where: {
             userId: userId,
-          }
+          },
+          include: { categories: true },
         }
       );
       res.locals.allItems = items;
