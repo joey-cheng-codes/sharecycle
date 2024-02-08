@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ItemProps } from "../../types";
 import { Button, Card, Avatar, Badge } from "react-daisyui";
 import ItemDescription from "../ItemDescription/ItemDescription";
+import { categoryNames } from "../../common";
 
 const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories, userId }: ItemProps): React.JSX.Element => {
   const [informationVisible, setInformationVisible] = useState(false);
@@ -19,6 +20,21 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
     return `${formattedMonth}/${formattedDay}/${formattedYear}`;
   };
   const date = formatCreateDate(createDate);
+
+  const categoryValueArr = categories.map((category) => {
+    return category.name;
+  });
+
+  const categoryLabelArr: string[] = [];
+  categoryValueArr.forEach((val) => {
+    categoryNames.filter((obj) => {
+      if (obj.value === val) {
+        categoryLabelArr.push(obj.label);
+      }
+    });
+  });
+
+
   return (
     <div>
       <Card className="p-3 mx-auto w-auto bg-slate-300 rounded-xl shadow-lg transform transition duration-400 hover:scale-105 hover:shadow-2xl">
@@ -26,9 +42,10 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
           <Card.Title>{itemName}</Card.Title>
         </div>
         <Card.Image className="cursor-pointer rounded" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
-        <div className="p-3 flex flex-row gap-3">
-          <Badge variant="outline" color="primary">Home & Kitchen</Badge>
-          <Badge variant="outline" color="primary">Tools & DIY</Badge>
+        <div className="p-3 flex flex-wrap gap-3">
+          {categoryLabelArr.map((label: string) => {
+            return <Badge size="sm" key={label} variant="outline" color="primary">{label}</Badge>;
+          })}
         </div>
         <Card.Body className="p-1">
           <div className="flex items-center content-center flex-row gap-1">
