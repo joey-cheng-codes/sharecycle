@@ -55,7 +55,7 @@ const ItemContainer = (): React.JSX.Element => {
       const { id, username, nickname, firstName, lastName, email, password, profileImageUrl }: UserProps = user;
       count++;
       return (
-        <div key={`${id}-${count}`} >
+        <div className="max-w-xs" key={`${id}-${count}`} >
           <Item itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} username={username} categories={categories} />
         </div >
       );
@@ -63,9 +63,8 @@ const ItemContainer = (): React.JSX.Element => {
   });
 
   return (
-    <div>
-      <p>I am in the item container</p>
-      <div className='items flex gap-3'>
+    <div className="m-3">
+      <div className='flex flex-wrap gap-3'>
         {createItems}
       </div>
     </div>

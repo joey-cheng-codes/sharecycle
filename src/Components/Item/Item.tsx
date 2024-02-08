@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { ItemProps } from "../../types";
+import { Button, Card, Avatar, Badge } from "react-daisyui";
+import Information from "./Information/Information";
 
+// interface Category {
+//   value: string
+//   label: string
+// }
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories }: ItemProps): React.JSX.Element => {
-
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories, userId }: ItemProps): React.JSX.Element => {
+  // if (!categories) categories = [{ value: "hardcoding", label: "woah" }];
+  const [informationVisible, setInformationVisible] = useState(false);
   const formatCreateDate = (rawDate: string): string => {
+
     const date = new Date(rawDate);
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -16,55 +24,38 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
 
     return `${formattedMonth}/${formattedDay}/${formattedYear}`;
   };
-
   const date = formatCreateDate(createDate);
+  // const { value, label }: Category[] = categories;
 
   return (
     <div>
-      <div className="min-h-screen bg-gray-100 flex justify-start items-start">
-        <div className="max-w-xs container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
-          <div>
-            <h1 className="text-2xl mt-2 ml-4 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">{itemName}</h1>
-            <p>description:{description}</p>
-            <p>borrowed counter: {rentCount} </p>
-            <p>loan duration day: {loanDurationDays} </p>
-            <p className="ml-4 mt-1 mb-2 text-gray-700 hover:underline cursor-pointer">
-              Categories: {
-                categories?.map(category => category.name).join(", ")
-              }</p>
-          </div>
-          <img className="w-full cursor-pointer" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
-
-          <div className="flex-col p-4 justify-between">
-            <div className="flex items-center space-x-2">
-              <img className="w-10 rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="sara" />
-              <h2 className="text-gray-800 font-bold cursor-pointer">User: {username}</h2>
-              <h2 className="text-gray-800 font-bold cursor-pointer">Date: {date}</h2>
-              <h2 className="text-gray-800 font-bold cursor-pointer">Status: {status}</h2>
-            </div>
-            <div className="flex space-x-2">
-              <div className="flex space-x-1 items-center">
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gray-600 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                </span>
-                <span>22</span>
-              </div>
-              <div className="flex space-x-1 items-center">
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-red-500 hover:text-red-400 transition duration-100 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                  </svg>
-                </span>
-                <span>20</span>
-              </div>
-              <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4 cursor-pointer">Information</span>
-            </div>
-          </div>
+      <Card className="p-3 mx-auto w-auto bg-slate-300 rounded-xl shadow-lg transform transition duration-400 hover:scale-105 hover:shadow-2xl">
+        <div className="p-3 flex items-center justify-center">
+          <Card.Title>{itemName}</Card.Title>
         </div>
-      </div>
-    </div>
+        <Card.Image className="cursor-pointer rounded" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
+        {/* <p>{
+          categories.map(category => category.label).join(", ")
+        }</p> */}
+        <div className="p-3 flex flex-row gap-3">
+          <Badge variant="outline" color="primary">Home & Kitchen</Badge>
+          <Badge variant="outline" color="primary">Tools & DIY</Badge>
+        </div>
+        <Card.Body className="p-1">
+          <div className="flex items-center content-center flex-row gap-1">
+            <Avatar size="xs" shape="circle" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" />
+            <h2 className="text-gray-800 font-bold">{username}</h2>
+            <h2 className="text-gray-800"> | {date}</h2>
+          </div>
+
+        </Card.Body>
+        <div className="flex justify-between items-center content-center space-x-2">
+          <Badge size="sm" color="ghost">{status}</Badge>
+          <Button onClick={() => { setInformationVisible((prevState) => !prevState); }} size="md" color="accent">Information</Button>
+        </div>
+      </Card>
+      {informationVisible && <Information userId={userId} itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} username={username} status={status} categories={categories} setInformationVisible={setInformationVisible} />}
+    </div >
 
   );
 };
