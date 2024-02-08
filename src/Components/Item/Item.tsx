@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { ItemProps } from "../../types";
 import { Button, Card, Avatar, Badge } from "react-daisyui";
-import Information from "./Information/Information";
-
-// interface Category {
-//   value: string
-//   label: string
-// }
+import ItemDescription from "../ItemDescription/ItemDescription";
 
 const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories, userId }: ItemProps): React.JSX.Element => {
-  // if (!categories) categories = [{ value: "hardcoding", label: "woah" }];
   const [informationVisible, setInformationVisible] = useState(false);
   const formatCreateDate = (rawDate: string): string => {
 
@@ -25,8 +19,6 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
     return `${formattedMonth}/${formattedDay}/${formattedYear}`;
   };
   const date = formatCreateDate(createDate);
-  // const { value, label }: Category[] = categories;
-
   return (
     <div>
       <Card className="p-3 mx-auto w-auto bg-slate-300 rounded-xl shadow-lg transform transition duration-400 hover:scale-105 hover:shadow-2xl">
@@ -34,9 +26,6 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
           <Card.Title>{itemName}</Card.Title>
         </div>
         <Card.Image className="cursor-pointer rounded" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
-        {/* <p>{
-          categories.map(category => category.label).join(", ")
-        }</p> */}
         <div className="p-3 flex flex-row gap-3">
           <Badge variant="outline" color="primary">Home & Kitchen</Badge>
           <Badge variant="outline" color="primary">Tools & DIY</Badge>
@@ -54,7 +43,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
           <Button onClick={() => { setInformationVisible((prevState) => !prevState); }} size="md" color="accent">Information</Button>
         </div>
       </Card>
-      {informationVisible && <Information userId={userId} itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} username={username} status={status} categories={categories} setInformationVisible={setInformationVisible} />}
+      {informationVisible && <ItemDescription userId={userId} itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} username={username} status={status} categories={categories} setInformationVisible={setInformationVisible} />}
     </div >
 
   );

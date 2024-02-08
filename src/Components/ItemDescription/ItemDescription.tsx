@@ -1,14 +1,14 @@
 import React from "react";
-import { ItemProps } from "../../../types";
+import { ItemProps } from "../../types";
 import { Button, Card } from "react-daisyui";
 import { FaRecycle } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 
-interface InformationProps extends ItemProps {
+interface ItemDescriptionProps extends ItemProps {
   setInformationVisible: React.Dispatch<React.SetStateAction<boolean>>,
 
 }
-const Information = ({ setInformationVisible, itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, username, status, categories }: InformationProps): React.JSX.Element => {
+const ItemDescription = ({ setInformationVisible, itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, username, status, categories }: ItemDescriptionProps): React.JSX.Element => {
 
   const handleCloseInformation = () => {
     setInformationVisible(false);
@@ -38,4 +38,4 @@ const Information = ({ setInformationVisible, itemName, createDate, description,
   );
 };
 
-export default Information;
+export default ItemDescription;

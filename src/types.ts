@@ -24,11 +24,6 @@ export interface ItemProps {
   categories: CategoriesProps[]
 }
 
-// export interface CategoriesProps {
-//   id: string,
-//   name: string,
-//   items: ItemProps[],
-// }
 export interface CategoriesProps {
   value: string,
   label: string,
