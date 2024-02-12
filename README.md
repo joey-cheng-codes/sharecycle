@@ -2,7 +2,8 @@
 
 <br />
   <div align="center">
-    <img src="./src/Images/sharecycle-white.png" alt="Logo" width="150px" height="auto">
+    <img src="./src/Images/sharecycle-white.png#gh-dark-mode-only" alt="Logo" width="150px" height="auto">
+    <img src="./src/Images/sharecycle-blue.png#gh-light-mode-only" alt="Logo" width="150px" height="auto">
   </div>
 <br />
 
