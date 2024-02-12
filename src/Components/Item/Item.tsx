@@ -4,7 +4,11 @@ import { Button, Card, Avatar, Badge } from "react-daisyui";
 import ItemDescription from "../ItemDescription/ItemDescription";
 import { categoryNames } from "../../common";
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories, userId }: ItemProps): React.JSX.Element => {
+interface ItemTypes extends ItemProps {
+  profileImageUrl: string,
+}
+
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories, userId, profileImageUrl }: ItemTypes): React.JSX.Element => {
   const [informationVisible, setInformationVisible] = useState(false);
   const formatCreateDate = (rawDate: string): string => {
 
@@ -13,9 +17,13 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
     const day = date.getDate();
     const year = date.getFullYear() % 100;
 
-    const formattedMonth = month < 10 ? `0${month}` : month;
-    const formattedDay = day < 10 ? `0${day}` : day;
-    const formattedYear = year < 10 ? `0${year}` : year;
+    const formatNumber = (number: number): string => {
+      return number < 10 ? `0${number}` : `${number}`;
+    };
+
+    const formattedMonth = formatNumber(month);
+    const formattedDay = formatNumber(day);
+    const formattedYear = formatNumber(year);
 
     return `${formattedMonth}/${formattedDay}/${formattedYear}`;
   };
@@ -41,7 +49,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
         <div className="p-3 flex items-center justify-center">
           <Card.Title>{itemName}</Card.Title>
         </div>
-        <Card.Image className="cursor-pointer rounded" src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" />
+        <Card.Image className="cursor-pointer rounded" src={imageUrl} />
         <div className="p-3 flex flex-wrap gap-3">
           {categoryLabelArr.map((label: string) => {
             return <Badge size="sm" key={label} variant="outline" color="primary">{label}</Badge>;
@@ -49,7 +57,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
         </div>
         <Card.Body className="p-1">
           <div className="flex items-center content-center flex-row gap-1">
-            <Avatar size="xs" shape="circle" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" />
+            <Avatar size="xs" shape="circle" src={profileImageUrl} />
             <h2 className="text-gray-800 font-bold">{username}</h2>
             <h2 className="text-gray-800"> | {date}</h2>
           </div>
