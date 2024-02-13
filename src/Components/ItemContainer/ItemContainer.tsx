@@ -53,14 +53,13 @@ const ItemContainer = (): React.JSX.Element => {
     // To do: figure out image upload 
     const imageUrl = "https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
     if (user) {
-      const { id, username, nickname, firstName, lastName, email, password }: UserProps = user;
+
+      const { id, username, profileImageUrl, nickname, firstName, lastName, email, password, }: UserProps = user;
       count++;
-      // To do: figure out image upload 
-      const profileImageUrl = "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg";
 
       return (
         <div className="max-w-xs" key={`${id}-${count}`} >
-          <Item itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} username={username} profileImageUrl={profileImageUrl} categories={categories} />
+          {profileImageUrl && <Item itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} userId={userId} status={status} username={username} profileImageUrl={profileImageUrl} categories={categories} />}
         </div >
       );
     }

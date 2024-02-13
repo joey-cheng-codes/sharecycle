@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import defaultUserIcon from "../../Images/no-user.png";
 
 const Avatar = (): React.JSX.Element => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   return (
     <div>
-      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" className="w-100 rounded-full cursor-pointer" src="https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg" alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
+      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" className="w-100 rounded-full cursor-pointer" src={defaultUserIcon} alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
 
       {/* <!-- Dropdown menu --> */}
       <div
