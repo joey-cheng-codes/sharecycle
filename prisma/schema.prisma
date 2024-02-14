@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
-  username        String   @unique
-  nickname        String?
-  firstName       String
-  lastName        String
-  email           String   @unique
-  password        String
-  profileImageUrl String?
-  friendIds       String[]
-  items           Item[]
+  id           String   @id @default(uuid())
+  username     String   @unique
+  nickname     String?
+  firstName    String
+  lastName     String
+  email        String   @unique
+  password     String
+  profileImage String?
+  friendIds    String[]
+  items        Item[]
 }
 
 model Item {
@@ -27,7 +27,7 @@ model Item {
   description      String
   rentCount        Int        @default(0)
   loanDurationDays Int
-  imageUrl         String
+  itemImage        String
   userId           String
   status           String     @default("available") // e.g., "unavailable", "available"
   user             User       @relation(fields: [userId], references: [id])

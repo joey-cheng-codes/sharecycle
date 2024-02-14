@@ -8,7 +8,7 @@ interface ItemDescriptionProps extends ItemProps {
   setInformationVisible: React.Dispatch<React.SetStateAction<boolean>>,
 
 }
-const ItemDescription = ({ setInformationVisible, itemName, createDate, description, rentCount, loanDurationDays, imageUrl, userId, username, status, categories }: ItemDescriptionProps): React.JSX.Element => {
+const ItemDescription = ({ setInformationVisible, itemName, createDate, description, rentCount, loanDurationDays, itemImage, userId, username, status, categories }: ItemDescriptionProps): React.JSX.Element => {
 
   const handleCloseInformation = () => {
     setInformationVisible(false);

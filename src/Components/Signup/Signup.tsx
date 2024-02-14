@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Images/sharecycle-white.png";
 import { Card, Input, Link, Button } from "react-daisyui";
 import defaultUserIcon from "../../Images/no-user.png";
+import { getBase64 } from "../../Utils/imageUtils";
 
 const Signup = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -13,19 +14,7 @@ const Signup = (): React.JSX.Element => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profileImageUrl, setProfileImageUrl] = useState(defaultUserIcon);
-
-  const getBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64Url = reader.result as string;
-        resolve(base64Url);
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  const [profileImage, setProfileImage] = useState(defaultUserIcon);
 
   const handleFileInputChange = async (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement & {
@@ -35,7 +24,7 @@ const Signup = (): React.JSX.Element => {
     const promise = await getBase64(newFile);
 
     if (promise) {
-      setProfileImageUrl(promise);
+      setProfileImage(promise);
     }
     else {
       console.error("Failed to get base64 data for the file.");
@@ -58,7 +47,7 @@ const Signup = (): React.JSX.Element => {
           lastName,
           email,
           password,
-          profileImageUrl
+          profileImage
         })
       });
       if (response.ok) {
@@ -113,10 +102,10 @@ const Signup = (): React.JSX.Element => {
 
                   <div>
                     <label className="label">
-                      <span className="label-text">Profile Image URL:</span>
+                      <span className="label-text">Upload Profile Image:</span>
                     </label>
-                    <Input onChange={handleFileInputChange} id="profileImageUrl" name="profileImageUrl" type="file" placeholder="Profile Image URL" color="primary" className="w-full max-w-xs" />
-                    {/* <Button onClick={submitImage}>Upload Image</Button> */}
+                    <Input onChange={handleFileInputChange} id="profileImage" name="profileImage" type="file" placeholder="Profile Image URL" color="primary" className="w-full max-w-xs" />
+
                   </div>
 
                   <Button fullWidth color="primary">Create New Account</Button>

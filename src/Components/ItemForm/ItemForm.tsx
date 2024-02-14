@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { Button, Input, Form, Textarea } from "react-daisyui";
 import { categoryNames } from "../../common";
+import { getBase64 } from "../../Utils/imageUtils";
+import itemPlaceholder from "../../Images/item-placeholder.png";
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -16,13 +18,20 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
   const [loanDurationDays, setLoanDurationDays] = useState(0);
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [itemImage, setItemImage] = useState(itemPlaceholder);
 
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageUrl(() => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8D-G0b8ka5kyWMioBDY98SOJCYt8Xy7kklA&usqp=CAU");
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement & {
+      files: FileList;
+    };
+    const newFile = target.files[0];
+    const promise = await getBase64(newFile);
+    if (promise) {
+      setItemImage(promise);
+    }
+    else {
+      console.error("Failed to get base64 data for the file.");
     }
   };
 
@@ -44,7 +53,7 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
           description,
           loanDurationDays,
           categories: categories.map(category => ({ name: category.value })),
-          imageUrl,
+          itemImage,
         })
 
       });
