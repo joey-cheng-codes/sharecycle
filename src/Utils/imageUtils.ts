@@ -1,3 +1,5 @@
+export const MAX_IMAGE_SIZE_MB = 5;
+
 export const getBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

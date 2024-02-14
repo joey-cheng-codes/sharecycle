@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { Button, Input, Form, Textarea } from "react-daisyui";
 import { categoryNames } from "../../common";
-import { getBase64 } from "../../Utils/imageUtils";
+import { getBase64, MAX_IMAGE_SIZE_MB } from "../../Utils/imageUtils";
 import itemPlaceholder from "../../Images/item-placeholder.png";
 interface ItemProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -26,12 +26,19 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
       files: FileList;
     };
     const newFile = target.files[0];
-    const promise = await getBase64(newFile);
-    if (promise) {
-      setItemImage(promise);
+    const fileSizeMB = newFile.size / (1024 * 1024); // Convert bytes to megabytes
+    if (fileSizeMB > MAX_IMAGE_SIZE_MB) {
+      alert(`Please select an image smaller than ${MAX_IMAGE_SIZE_MB} MB.`);
+      target.value = "";
     }
     else {
-      console.error("Failed to get base64 data for the file.");
+      const promise = await getBase64(newFile);
+      if (promise) {
+        setItemImage(promise);
+      }
+      else {
+        console.error("Failed to get base64 data for the file.");
+      }
     }
   };
 
@@ -111,7 +118,7 @@ const ItemForm = ({ setModalVisible }: ItemProps): React.JSX.Element => {
         <Input
           onChange={handleImageChange}
           className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, or JPG (MAX. 800x400px).</p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, or JPG (Suggested: 1200x900px. Max Image Size: 5MB ).</p>
         <Button color="primary" type="submit">
           Create
         </Button>

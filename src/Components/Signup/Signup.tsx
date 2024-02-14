@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../Images/sharecycle-white.png";
 import { Card, Input, Link, Button } from "react-daisyui";
 import defaultUserIcon from "../../Images/no-user.png";
-import { getBase64 } from "../../Utils/imageUtils";
+import { getBase64, MAX_IMAGE_SIZE_MB } from "../../Utils/imageUtils";
 
 const Signup = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -21,13 +21,20 @@ const Signup = (): React.JSX.Element => {
       files: FileList;
     };
     const newFile = target.files[0];
-    const promise = await getBase64(newFile);
-
-    if (promise) {
-      setProfileImage(promise);
+    const fileSizeMB = newFile.size / (1024 * 1024); // Convert bytes to megabytes
+    if (fileSizeMB > MAX_IMAGE_SIZE_MB) {
+      alert(`Please select an image smaller than ${MAX_IMAGE_SIZE_MB} MB.`);
+      target.value = "";
     }
     else {
-      console.error("Failed to get base64 data for the file.");
+      const promise = await getBase64(newFile);
+
+      if (promise) {
+        setProfileImage(promise);
+      }
+      else {
+        console.error("Failed to get base64 data for the file.");
+      }
     }
   };
 
@@ -105,7 +112,7 @@ const Signup = (): React.JSX.Element => {
                       <span className="label-text">Upload Profile Image:</span>
                     </label>
                     <Input onChange={handleFileInputChange} id="profileImage" name="profileImage" type="file" placeholder="Profile Image URL" color="primary" className="w-full max-w-xs" />
-
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, or JPG (Suggested: 500x500px. Max Image Size: 5MB ).</p>
                   </div>
 
                   <Button fullWidth color="primary">Create New Account</Button>
