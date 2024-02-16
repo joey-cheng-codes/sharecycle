@@ -28,7 +28,7 @@ async function main() {
               },
             },
             loanDurationDays: 10,
-            imageUrl: "https://images.pexels.com/photos/775414/pexels-photo-775414.jpeg?auto=compress&cs=tinysrgb&w=300",
+            itemImage: "https://images.pexels.com/photos/775414/pexels-photo-775414.jpeg?auto=compress&cs=tinysrgb&w=300",
           },
         },
       },

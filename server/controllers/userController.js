@@ -9,7 +9,7 @@ userController.createUser = async (req, res, next) => {
 
   if (req.body.firstName && req.body.lastName && req.body.email && req.body.username && req.body.password) {
     try {
-      const { firstName, lastName, nickname, email, username, password, profileImageUrl } = req.body;
+      const { firstName, lastName, nickname, email, username, password, profileImage } = req.body;
       // // Generate salt asynchronously
       const salt = await bcrypt.genSaltSync(saltRounds);
 
@@ -24,7 +24,7 @@ userController.createUser = async (req, res, next) => {
           username,
           email,
           password: hashedPassword,
-          profileImageUrl
+          profileImage
         }
       });
       res.locals.user = user;

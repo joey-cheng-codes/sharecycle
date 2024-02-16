@@ -5,10 +5,10 @@ import ItemDescription from "../ItemDescription/ItemDescription";
 import { categoryNames } from "../../common";
 
 interface ItemTypes extends ItemProps {
-  profileImageUrl: string,
+  profileImage: string,
 }
 
-const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, imageUrl, username, status, categories, userId, profileImageUrl }: ItemTypes): React.JSX.Element => {
+const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, itemImage, username, status, categories, userId, profileImage }: ItemTypes): React.JSX.Element => {
   const [informationVisible, setInformationVisible] = useState(false);
   const formatCreateDate = (rawDate: string): string => {
 
@@ -49,7 +49,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
         <div className="p-3 flex items-center justify-center">
           <Card.Title>{itemName}</Card.Title>
         </div>
-        <Card.Image className="cursor-pointer rounded" src={imageUrl} />
+        <Card.Image className="rounded" src={itemImage} width="250px" />
         <div className="p-3 flex flex-wrap gap-3">
           {categoryLabelArr.map((label: string) => {
             return <Badge size="sm" key={label} variant="outline" color="primary">{label}</Badge>;
@@ -57,7 +57,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
         </div>
         <Card.Body className="p-1">
           <div className="flex items-center content-center flex-row gap-1">
-            <Avatar size="xs" shape="circle" src={profileImageUrl} />
+            <Avatar size="xs" shape="circle" src={profileImage} />
             <h2 className="text-gray-800 font-bold">{username}</h2>
             <h2 className="text-gray-800"> | {date}</h2>
           </div>
@@ -68,7 +68,7 @@ const Item = ({ itemName, createDate, description, rentCount, loanDurationDays, 
           <Button onClick={() => { setInformationVisible((prevState) => !prevState); }} size="md" color="accent">Information</Button>
         </div>
       </Card>
-      {informationVisible && <ItemDescription userId={userId} itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} imageUrl={imageUrl} username={username} status={status} categories={categories} setInformationVisible={setInformationVisible} />}
+      {informationVisible && <ItemDescription userId={userId} itemName={itemName} createDate={createDate} description={description} rentCount={rentCount} loanDurationDays={loanDurationDays} itemImage={itemImage} username={username} status={status} categories={categories} setInformationVisible={setInformationVisible} />}
     </div >
 
   );

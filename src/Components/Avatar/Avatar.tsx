@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import defaultUserIcon from "../../Images/no-user.png";
 
 const Avatar = (): React.JSX.Element => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   return (
     <div>
-      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" className="w-100 rounded-full cursor-pointer" src="https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg" alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
+      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" className="w-100 rounded-full cursor-pointer" src={defaultUserIcon} alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
 
       {/* <!-- Dropdown menu --> */}
       <div
@@ -28,7 +29,7 @@ const Avatar = (): React.JSX.Element => {
           </li>
         </ul>
         <div className="py-1">
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+          <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
         </div>
       </div>
     </div>

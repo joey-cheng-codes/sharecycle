@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Images/sharecycle-white.png";
 import { Card, Input, Link, Button } from "react-daisyui";
+import defaultUserIcon from "../../Images/no-user.png";
+import { getBase64, MAX_IMAGE_SIZE_MB } from "../../Utils/imageUtils";
 
 const Signup = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -12,7 +14,29 @@ const Signup = (): React.JSX.Element => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profileImageUrl, setProfileImageUrl] = useState("");
+  const [profileImage, setProfileImage] = useState(defaultUserIcon);
+
+  const handleFileInputChange = async (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement & {
+      files: FileList;
+    };
+    const newFile = target.files[0];
+    const fileSizeMB = newFile.size / (1024 * 1024); // Convert bytes to megabytes
+    if (fileSizeMB > MAX_IMAGE_SIZE_MB) {
+      alert(`Please select an image smaller than ${MAX_IMAGE_SIZE_MB} MB.`);
+      target.value = "";
+    }
+    else {
+      const promise = await getBase64(newFile);
+
+      if (promise) {
+        setProfileImage(promise);
+      }
+      else {
+        console.error("Failed to get base64 data for the file.");
+      }
+    }
+  };
 
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -30,7 +54,7 @@ const Signup = (): React.JSX.Element => {
           lastName,
           email,
           password,
-          profileImageUrl
+          profileImage
         })
       });
       if (response.ok) {
@@ -83,10 +107,13 @@ const Signup = (): React.JSX.Element => {
                   </label>
                   <Input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value); }} id="password" name="password" type="password" autoComplete="current-password" placeholder="Password" color="primary" required className="w-full max-w-xs" />
 
-                  <label className="label">
-                    <span className="label-text">Profile Image URL:</span>
-                  </label>
-                  <Input onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfileImageUrl(e.target.value); }} id="profileImageUrl" name="profileImageUrl" type="text" placeholder="Profile Image URL" color="primary" className="w-full max-w-xs" />
+                  <div>
+                    <label className="label">
+                      <span className="label-text">Upload Profile Image:</span>
+                    </label>
+                    <Input onChange={handleFileInputChange} id="profileImage" name="profileImage" type="file" placeholder="Profile Image URL" color="primary" className="w-full max-w-xs" />
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, or JPG (Suggested: 500x500px. Max Image Size: 5MB ).</p>
+                  </div>
 
                   <Button fullWidth color="primary">Create New Account</Button>
                   <p className="text-sm text-gray-500">{"Already have an account? "}

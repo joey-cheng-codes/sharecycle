@@ -6,7 +6,7 @@ export interface UserProps {
   lastName?: string,
   email?: string,
   password?: string,
-  profileImageUrl?: string,
+  profileImage?: string,
 }
 
 export interface ItemProps {
@@ -16,7 +16,7 @@ export interface ItemProps {
   description: string,
   rentCount: number,
   loanDurationDays: number,
-  imageUrl: string,
+  itemImage: string,
   userId: string,
   status: string,
   user?: UserProps
