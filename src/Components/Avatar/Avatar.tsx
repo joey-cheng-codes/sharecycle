@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import defaultUserIcon from "../../Images/no-user.png";
-
-const Avatar = (): React.JSX.Element => {
+import { useUserContext } from "../../context";
+import { Avatar } from "react-daisyui";
+const Profile = (): React.JSX.Element => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  const { user } = useUserContext();
   return (
     <div>
-      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" className="w-100 rounded-full cursor-pointer" src={defaultUserIcon} alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
+      <Avatar size='xs' shape='circle' id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" src={user?.profileImage || defaultUserIcon} onClick={() => { setDropdownVisible(!dropdownVisible); }} />
 
       {/* <!-- Dropdown menu --> */}
       <div
@@ -14,8 +16,8 @@ const Avatar = (): React.JSX.Element => {
         className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 transform translate-x-[-100%] absolute"
       >
         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-          <div>Bonnie Green</div>
-          <div className="font-medium truncate">name@flowbite.com</div>
+          <div>{user?.firstName}</div>
+          <div className="font-medium truncate">{user?.email}</div>
         </div>
         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
           <li>
@@ -35,4 +37,4 @@ const Avatar = (): React.JSX.Element => {
     </div>
   );
 };
-export default Avatar;
+export default Profile;
