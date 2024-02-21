@@ -11,8 +11,10 @@ router.post("/",
   }
 );
 
-router.get("/", itemController.getAllItems, (req, res) => {
-  res.status(200).json(res.locals.allItems);
-});
+router.get("/",
+  sessionController.verifySSID,
+  itemController.getAllItems, (req, res) => {
+    res.status(200).json(res.locals.allItems);
+  });
 
 module.exports = router;

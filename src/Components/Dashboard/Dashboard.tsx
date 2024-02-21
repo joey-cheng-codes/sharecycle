@@ -6,8 +6,11 @@ import ItemForm from "../ItemForm/ItemForm";
 import ItemContainer from "../ItemContainer/ItemContainer";
 import { Button } from "react-daisyui";
 import logo from "../../Images/sharecycle-blue.png";
+import { LoginProps } from "../../types";
 
-const Dashboard = (): React.JSX.Element => {
+
+const Dashboard = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
+
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <div className='dashboard-container'>
@@ -30,7 +33,7 @@ const Dashboard = (): React.JSX.Element => {
           </Button>
         </div>
         <div className='avatar-container'>
-          <Avatar />
+          <Avatar setLoggedIn={setLoggedIn} />
         </div>
       </div>
       {modalVisible && <ItemForm setModalVisible={setModalVisible} />}

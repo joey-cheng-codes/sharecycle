@@ -1,8 +1,22 @@
 import React, { useState } from "react";
 import defaultUserIcon from "../../Images/no-user.png";
+import { LoginProps } from "../../types";
 
-const Avatar = (): React.JSX.Element => {
+const Avatar = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const signOutHandler = async () => {
+    try {
+      const response = await fetch("api/user/signOut", {
+        method: "POST",
+      });
+      if (response.ok) {
+        setLoggedIn(false);
+      }
+    }
+    catch (err) {
+      console.error(err, "Failed to delete session. Could not sign out user.");
+    }
+  };
 
   return (
     <div>
@@ -28,11 +42,11 @@ const Avatar = (): React.JSX.Element => {
             <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
           </li>
         </ul>
-        <div className="py-1">
-          <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+        <div onClick={signOutHandler} className="py-1 cursor-pointer">
+          <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</p>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default Avatar;
