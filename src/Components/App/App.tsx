@@ -24,7 +24,7 @@ const App = (): React.JSX.Element => {
       }
     };
     checkSession();
-  }, [loggedIn]);
+  }, []);
 
 
   return (
