@@ -28,3 +28,7 @@ export interface CategoriesProps {
   id: string,
   name: string,
 }
+
+export interface LoginProps {
+  setLoggedIn: (loggedIn: boolean) => void;
+}

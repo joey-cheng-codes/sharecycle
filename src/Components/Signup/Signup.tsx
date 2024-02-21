@@ -5,10 +5,10 @@ import logo from "../../Images/sharecycle-white.png";
 import { Card, Input, Link, Button } from "react-daisyui";
 import defaultUserIcon from "../../Images/no-user.png";
 import { getBase64, MAX_IMAGE_SIZE_MB } from "../../Utils/imageUtils";
-import { useUserContext } from "../../context"; // Import the context hook
+import { useUserContext } from "../../context";
+import { LoginProps } from "../../types";
 
-
-const Signup = (): React.JSX.Element => {
+const Signup = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
   const navigate = useNavigate();
   const { updateUser } = useUserContext();
   const [username, setUsername] = useState("");
@@ -62,8 +62,8 @@ const Signup = (): React.JSX.Element => {
       });
       if (response.ok) {
         const userData = await response.json();
-        console.log(userData, "will we get the data????");
         updateUser(userData);
+        setLoggedIn(true);
         navigate("/dashboard");
       } else {
         throw new Error("An error has occured. Failed to create a new account.");

@@ -5,7 +5,8 @@ import Signup from "./Signup";
 
 describe("Signup Component", () => {
   it("Renders the Signup component with form elements", () => {
-    const { getByLabelText, getByText } = render(<Signup />);
+    const setLoggedIn = jest.fn();
+    const { getByLabelText, getByText } = render(<Signup setLoggedIn={setLoggedIn} />);
     const firstNameInput = getByLabelText("First Name");
     const lastNameInput = getByLabelText("Last Name");
     const nickNameInput = getByLabelText("Nickname (optional)");
