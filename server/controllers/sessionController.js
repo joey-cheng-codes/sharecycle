@@ -18,10 +18,15 @@ sessionController.verifySSID = (req, res, next) => {
   if (!cookieValue) {
     return next({
       log: "Error caught on sessionController.verifySSID controller",
-      status: 500,
-      message: { err: "An error has occured." }
+      status: 401,
+      message: { err: "An error has occured. You don't have permission to be here." }
     });
   }
+  return next();
+};
+
+sessionController.deleteSession = (req, res, next) => {
+  req.session.destroy();
   return next();
 };
 

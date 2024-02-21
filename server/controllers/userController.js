@@ -81,7 +81,7 @@ userController.getUser = async (req, res, next) => {
     });
     if (!user) {
       return res.status(401).json(
-        { error: "Could not retrive information on the user." }
+        { error: "Could not retrieve information on the user." }
       );
     }
     else {

@@ -18,10 +18,20 @@ router.post("/signup",
   }
 );
 
-router.get("/:userId", userController.getUser,
+router.get("/:userId", sessionController.verifySSID, userController.getUser,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }
 );
 
+router.get("/isLoggedIn", sessionController.verifySSID, (req, res) => {
+  res.status(200).json(res.locals.user);
+
+});
+
+router.post("/signOut", sessionController.deleteSession, (req, res) => {
+  res.sendStatus(200);
+});
+
 module.exports = router;
+
