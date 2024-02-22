@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import defaultUserIcon from "../../Images/no-user.png";
-import { LoginProps } from "../../types";
+import { Avatar } from "react-daisyui";
+import { LoginProps, UserProps } from "../../types";
 
-const Avatar = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
+interface ProfileProps extends LoginProps {
+  userData: UserProps | null
+}
+
+const Profile = ({ setLoggedIn, userData }: ProfileProps): React.JSX.Element => {
+
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const signOutHandler = async () => {
     try {
@@ -20,7 +26,7 @@ const Avatar = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
 
   return (
     <div>
-      <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" className="w-100 rounded-full cursor-pointer" src={defaultUserIcon} alt="User dropdown" onClick={() => { setDropdownVisible(!dropdownVisible); }} />
+      <Avatar size='xs' shape='circle' id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" src={userData?.profileImage || defaultUserIcon} onClick={() => { setDropdownVisible(!dropdownVisible); }} />
 
       {/* <!-- Dropdown menu --> */}
       <div
@@ -28,8 +34,8 @@ const Avatar = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
         className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 transform translate-x-[-100%] absolute"
       >
         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-          <div>Bonnie Green</div>
-          <div className="font-medium truncate">name@flowbite.com</div>
+          <div>{userData?.firstName}</div>
+          <div className="font-medium truncate">{userData?.email}</div>
         </div>
         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
           <li>
@@ -49,4 +55,4 @@ const Avatar = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
     </div >
   );
 };
-export default Avatar;
+export default Profile;

@@ -2,10 +2,15 @@
 import React, { useState } from "react";
 import { Button, Input, Link, Card } from "react-daisyui";
 import logo from "../../Images/sharecycle-white.png";
+import { useUserContext } from "../../context"; // Import the context hook
+import { useNavigate } from "react-router-dom";
+import { LoginProps } from "../../types";
 
-const Login = (): React.JSX.Element => {
+const Login = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { updateUser } = useUserContext();
 
   const handleLoginSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -22,7 +27,10 @@ const Login = (): React.JSX.Element => {
         })
       });
       if (response.ok) {
-        window.location.replace("dashboard");
+        const userData = await response.json();
+        setLoggedIn(true);
+        updateUser(userData);
+        navigate("/dashboard");
       } else {
         throw new Error("An error has occured. Failed to login to account.");
       }

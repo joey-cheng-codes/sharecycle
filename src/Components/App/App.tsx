@@ -2,10 +2,17 @@ import React from "react";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import Dashboard from "../Dashboard/Dashboard";
+import { userContext } from "../../context";
+import { UserProps } from "../../types";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const App = (): React.JSX.Element => {
+  const [user, setUser] = useState<UserProps | undefined>(undefined);
+
+  const updateUser = (newUser: UserProps) => {
+    setUser(newUser);
+  };
   const [loggedIn, setLoggedIn] = useState(true);
   useEffect(() => {
     const checkSession = async () => {
@@ -28,27 +35,29 @@ const App = (): React.JSX.Element => {
 
 
   return (
-    <div>
+    <userContext.Provider value={{ user, updateUser }}>
       <div>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={<Login />}
-            ></Route>
-            <Route
-              path="/signup"
-              element={<Signup />}
-            ></Route>
-            <Route
-              path='/dashboard'
-              element={loggedIn ? <Dashboard setLoggedIn={setLoggedIn} /> : <Navigate
-                to="/" />}
-            ></Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </div >
+        <div>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={<Login setLoggedIn={setLoggedIn} />}
+              ></Route>
+              <Route
+                path="/signup"
+                element={<Signup setLoggedIn={setLoggedIn} />}
+              ></Route>
+              <Route
+                path='/dashboard'
+                element={loggedIn ? <Dashboard setLoggedIn={setLoggedIn} /> : <Navigate
+                  to="/" />}
+              ></Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </div >
+    </userContext.Provider >
   );
 };
 
