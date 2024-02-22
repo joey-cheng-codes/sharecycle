@@ -12,13 +12,3 @@ export const userContext = createContext<UserContextType>({
 });
 
 export const useUserContext = () => useContext(userContext);
-
-// export const userContext = createContext<UserProps | undefined>(undefined);
-
-// export function useUserContext() {
-//   const user = useContext(userContext);
-//   if (user === undefined) {
-//     throw new Error("useUserContext must be used with a userContext. User is undefined");
-//   }
-//   return user;
-// }
