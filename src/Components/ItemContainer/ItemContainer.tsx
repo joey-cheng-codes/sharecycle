@@ -1,53 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Item from "../Item/Item";
 import { UserProps, ItemProps } from "../../types";
+import { useQuery } from "react-query";
 
 const ItemContainer = (): React.JSX.Element => {
-  const [cards, setCards] = useState<ItemProps[]>([]);
-  const [user, setUser] = useState({} as UserProps);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/item/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setCards(data);
+  const fetchItemData = async () => {
+    const response = await fetch("/api/item/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+    });
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("An error has occured trying to display items..");
+    }
+  };
+  const fetchUserData = async (userId: string) => {
+    const response = await fetch(`/api/user/:${userId}`, {
+      method: "GET",
+      headers:
+      {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+    });
+    if (response.ok) {
+      return response.json();
+    }
+    else {
+      throw new Error("An error has occured trying to retrieve nickname");
+    }
+  };
 
-          const responseTwo = await fetch(`/api/user/:${data.userId}`, {
-            method: "GET",
-            headers:
-            {
-              "Content-Type": "application/json"
-            },
-            credentials: "include",
-          });
-          if (responseTwo.ok) {
-            const userData = await responseTwo.json();
-            setUser(userData);
-          }
-          else {
-            throw new Error("An error has occured trying to retrieve nickname");
-          }
+  const { data: cards, error: cardsError, isLoading: cardsLoading } = useQuery("cards", fetchItemData);
 
-        }
-        else {
-          throw new Error("An error has occured trying to display items..");
-        }
-      }
-      catch (err) {
-        console.error(err, "Error displaying items.");
-      }
-    };
-    fetchData();
-  }, []);
+  if (cardsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (cardsError) console.error(cardsError, "Error displaying items.");
+
+  if (!cards) {
+    return <div>You have no items. Begin by adding some items.</div>;
+  }
+
+  const { data: user, error: userError, } = useQuery("user", () => fetchUserData(cards?.userId));
+  if (userError) console.error(userError, "Error retreiving user data.");
+
   let count = 0;
-  const createItems = cards.map((card) => {
+  const createItems = cards.map((card: ItemProps) => {
 
     const { itemName, createDate, description, rentCount, loanDurationDays, userId, status, categories, itemImage } = card;
 
