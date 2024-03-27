@@ -10,7 +10,7 @@ const Login = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { updateUser } = useUserContext();
+  const { setUser } = useUserContext();
 
   const handleLoginSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -29,7 +29,7 @@ const Login = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
       if (response.ok) {
         const userData = await response.json();
         setLoggedIn(true);
-        updateUser(userData);
+        setUser(userData);
         navigate("/dashboard");
       } else {
         throw new Error("An error has occured. Failed to login to account.");

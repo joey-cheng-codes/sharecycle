@@ -3,12 +3,12 @@ import { UserProps } from "./types";
 
 interface UserContextType {
   user: UserProps | undefined;
-  updateUser: (user: UserProps) => void;
+  setUser: (user: UserProps | undefined) => void;
 }
 
 export const userContext = createContext<UserContextType>({
   user: undefined,
-  updateUser: () => { },
+  setUser: () => { },
 });
 
 export const useUserContext = () => useContext(userContext);
