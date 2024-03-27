@@ -12,11 +12,8 @@ const queryClient = new QueryClient();
 
 const App = (): React.JSX.Element => {
   const [user, setUser] = useState<UserProps | undefined>(undefined);
-
-  const updateUser = (newUser: UserProps) => {
-    setUser(newUser);
-  };
   const [loggedIn, setLoggedIn] = useState(true);
+
   useEffect(() => {
     const checkSession = async () => {
 
@@ -27,6 +24,8 @@ const App = (): React.JSX.Element => {
         }
         else {
           setLoggedIn(true);
+          const data = await response.json();
+          setUser(data.user);
         }
       }
       catch (err) {
@@ -39,7 +38,7 @@ const App = (): React.JSX.Element => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <userContext.Provider value={{ user, updateUser }}>
+      <userContext.Provider value={{ user, setUser }}>
         <div>
           <div>
             <BrowserRouter>
@@ -62,7 +61,7 @@ const App = (): React.JSX.Element => {
           </div>
         </div >
       </userContext.Provider >
-    </QueryClientProvider>
+    </QueryClientProvider >
   );
 };
 

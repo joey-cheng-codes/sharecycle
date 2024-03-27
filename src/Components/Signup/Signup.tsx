@@ -10,7 +10,7 @@ import { LoginProps } from "../../types";
 
 const Signup = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
   const navigate = useNavigate();
-  const { updateUser } = useUserContext();
+  const { setUser } = useUserContext();
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -62,7 +62,7 @@ const Signup = ({ setLoggedIn }: LoginProps): React.JSX.Element => {
       });
       if (response.ok) {
         const userData = await response.json();
-        updateUser(userData);
+        setUser(userData);
         setLoggedIn(true);
         navigate("/dashboard");
       } else {

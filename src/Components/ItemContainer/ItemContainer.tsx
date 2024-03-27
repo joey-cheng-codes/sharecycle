@@ -13,7 +13,7 @@ const ItemContainer = (): React.JSX.Element => {
       credentials: "include",
     });
     if (response.ok) {
-      return response.json();
+      return await response.json();
     } else {
       throw new Error("An error has occured trying to display items..");
     }
@@ -28,7 +28,7 @@ const ItemContainer = (): React.JSX.Element => {
       credentials: "include",
     });
     if (response.ok) {
-      return response.json();
+      return await response.json();
     }
     else {
       throw new Error("An error has occured trying to retrieve nickname");
@@ -36,6 +36,7 @@ const ItemContainer = (): React.JSX.Element => {
   };
 
   const { data: cards, error: cardsError, isLoading: cardsLoading } = useQuery("cards", fetchItemData);
+  const { data: user, error: userError, } = useQuery("user", () => fetchUserData(cards?.userId));
 
   if (cardsLoading) {
     return <div>Loading...</div>;
@@ -47,7 +48,6 @@ const ItemContainer = (): React.JSX.Element => {
     return <div>You have no items. Begin by adding some items.</div>;
   }
 
-  const { data: user, error: userError, } = useQuery("user", () => fetchUserData(cards?.userId));
   if (userError) console.error(userError, "Error retreiving user data.");
 
   let count = 0;
