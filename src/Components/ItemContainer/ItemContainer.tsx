@@ -44,7 +44,7 @@ const ItemContainer = (): React.JSX.Element => {
 
   if (cardsError) console.error(cardsError, "Error displaying items.");
 
-  if (!cards) {
+  if (cards.length === 0) {
     return <div>You have no items. Begin by adding some items.</div>;
   }
 
